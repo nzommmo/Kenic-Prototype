@@ -22,8 +22,6 @@ coverage/
 dist/
 build/
 
-# Tailwind generated CSS (optional)
-public/css/output.css
 
 # OS files
 .DS_Store
