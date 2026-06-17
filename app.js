@@ -10,13 +10,9 @@ app.use(express.json());
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "dev-secret",
+    secret: "mysecret",
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      secure: true,
-      sameSite: "none"
-    }
   })
 );
 

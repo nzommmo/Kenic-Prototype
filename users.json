@@ -17,5 +17,14 @@
     "orgType": "registrar",
     "industry": "Digital Agency",
     "phone": "0725099543"
+  },
+  {
+    "email": "eric@dotsavvyafrica12.com",
+    "password": "$2b$10$iFhBgRKBbuji23V4KHaKIOc6UqrZDJhLMqO8.beYgMhCrgB2mtM6q",
+    "name": "Eric Nzomo",
+    "org": "Test",
+    "orgType": "registrar",
+    "industry": "Digital Agency",
+    "phone": "0725099543"
   }
 ]
