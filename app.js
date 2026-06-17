@@ -1,11 +1,9 @@
-const dns = require("dns");
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
-dns.setDefaultResultOrder("ipv4first");
 require("dotenv").config();
-const express = require("express");
-const session = require("express-session");
-const MongoStore = require("connect-mongo").default;
-const path = require("path");
+
+const express    = require("express");
+const session    = require("express-session");
+const MongoStore = require("connect-mongo");
+const path       = require("path");
 
 const app = express();
 
@@ -18,7 +16,7 @@ app.use(
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URI,
       dbName: "kenic",
-      ttl: 60 * 60 * 8, // 8 hours
+      ttl: 60 * 60 * 8,
     }),
     secret: process.env.SESSION_SECRET || "fallback-dev-secret",
     resave: false,
@@ -48,6 +46,11 @@ app.use((req, res) => {
 
 // ── Local dev server ──────────────────────────────────────────────────────────
 if (process.env.NODE_ENV !== "production") {
+  // Add DNS override only for local dev
+  const dns = require("dns");
+  dns.setServers(["8.8.8.8", "8.8.4.4"]);
+  dns.setDefaultResultOrder("ipv4first");
+
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
