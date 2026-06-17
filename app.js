@@ -1,75 +1,42 @@
-
-const connectDB=require("./database");
-
-connectDB();
 const express = require("express");
 const session = require("express-session");
-const MongoStore = require("connect-mongo");
 const path = require("path");
-require("dotenv").config();
 
 const app = express();
 
-// middleware
-app.use(express.urlencoded({ extended:true }));
+// ── Middleware ────────────────────────────────────────────────────────────────
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
-// sessions
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
-
-    resave:false,
-    saveUninitialized:false,
-
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,
-    }),
-
-    cookie:{
-      secure:true,
-      httpOnly:true,
-      sameSite:"none",
-      maxAge:1000 * 60 * 60 * 24
-    }
+    secret: "mysecret",
+    resave: false,
+    saveUninitialized: false,
   })
 );
 
+app.use(express.static(path.join(__dirname, "public")));
 
-// static
-app.use(
-  express.static(
-    path.join(__dirname,"public")
-  )
-);
+// ── View Engine ───────────────────────────────────────────────────────────────
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
+// ── Routes ────────────────────────────────────────────────────────────────────
 
-// views
-app.set(
-  "view engine",
-  "ejs"
-);
-
-app.set(
-  "views",
-  path.join(__dirname,"views")
-);
-
-
-// routes
-
+// Auth routes: /login  /signup  /logout  (standalone pages, no shell)
 app.use("/", require("./routes/auth"));
 
+// Portal routes: /dashboard  /reports  /domains  /financials  /registrars  /settings
 app.use("/", require("./routes/portal"));
 
-
-// error handler
-
-app.use((err,req,res,next)=>{
- console.error(err);
- res.status(500).send("Internal Server Error");
+// ── 404 Fallback ──────────────────────────────────────────────────────────────
+app.use((req, res) => {
+  res.status(404).send("Page not found");
 });
 
-
-module.exports = app;
+// ── Start ─────────────────────────────────────────────────────────────────────
+const PORT = 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
