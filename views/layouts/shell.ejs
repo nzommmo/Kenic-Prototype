@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= typeof pageTitle !== 'undefined' ? pageTitle + ' - KeNIC Partner Portal' : 'KeNIC Partner Portal' %></title>
+  <link rel="stylesheet" href="/css/output.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <!-- HTMX -->
+  <script src="https://unpkg.com/htmx.org@2.0.4" defer></script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1;
+    }
+    #main-content { transition: opacity 0.15s ease; }
+    #main-content.htmx-request { opacity: 0.5; }
+  </style>
+</head>
+
+<body class="bg-bg-muted text-on-surface" style="font-family: var(--font-family-body-md, Inter, sans-serif);">
+
+  <%- include('../partials/sidebar', { activePage: activePage }) %>
+
+  <!-- Topbar: fixed, spans full width minus the sidebar -->
+  <%- include('../partials/topbar', { pageTitle: pageTitle, userInitials: userInitials }) %>
+
+  <!-- Page body: pushed right of sidebar and below topbar -->
+  <div class="ml-64 pt-16 min-h-screen flex flex-col">
+    <main id="main-content" class="flex-1 overflow-y-auto bg-bg-muted p-8">
+      <%- body %>
+    </main>
+  </div>
+
+</body>
+</html>

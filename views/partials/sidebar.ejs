@@ -1,0 +1,111 @@
+<%
+  const navItems = [
+    { href: '/dashboard',        icon: 'dashboard',    label: 'Dashboard'         },
+    <!-- { href: '/domains',          icon: 'language',     label: 'Domains'           }, -->
+    <!-- { href: '/financials',       icon: 'payments',     label: 'Financials'        }, -->
+    { href: '/registrars',       icon: 'badge',        label: 'Registrars'        },
+    { href: '/jointinitiatives', icon: 'handshake',    label: 'Joint Initiatives' },
+    { href: '/reports',          icon: 'assessment',   label: 'Reports'           },
+    { href: '/settings',         icon: 'settings',     label: 'Settings'          },
+  ];
+
+  const bottomItems = [
+    { href: '/docs',    icon: 'description',     label: 'Documentation' },
+    { href: '/support', icon: 'contact_support', label: 'Support'       },
+    { href: '/logout',  icon: 'logout',          label: 'Logout', isLogout: true },
+  ];
+%>
+
+<nav class="fixed left-0 top-0 bottom-0 w-64 z-40 flex flex-col border-r border-outline-variant shadow-sm overflow-y-auto"
+     style="background: #ffffff;">
+
+  <!-- Logo -->
+  <div class="px-6 pt-6 pb-4">
+    <img src="/images/logokenic.png" alt="KeNIC" class="h-10 w-auto object-contain" />
+    <div class="mt-2 text-on-surface-variant" style="font-family: var(--font-family-label-caps); font-size: 12px; letter-spacing: 0.05em;">
+      Partner Portal
+    </div>
+  </div>
+
+  <!-- New Registration CTA -->
+  <div class="px-6 pb-4">
+    <button
+      class="w-full bg-primary text-on-primary py-2 px-4 rounded font-semibold flex items-center justify-center gap-2 hover:bg-ke-green-dark transition-colors"
+      style="font-family: var(--font-family-label-caps); font-size: 14px;"
+    >
+      <span class="material-symbols-outlined" style="font-size: 20px;">add</span>
+      New Registration
+    </button>
+  </div>
+
+  <!-- Main nav -->
+  <ul class="flex-1 flex flex-col gap-1 px-3">
+    <% navItems.forEach(item => {
+         const isActive = (activePage === item.href);
+    %>
+    <li>
+      <a
+        href="<%= item.href %>"
+        hx-get="<%= item.href %>"
+        hx-target="#main-content"
+        hx-push-url="<%= item.href %>"
+        hx-swap="innerHTML"
+        hx-headers='{"HX-Request": "true"}'
+        class="nav-link flex items-center gap-3 px-3 py-3 rounded-lg transition-colors duration-200 <%= isActive ? 'font-bold border-l-4 border-primary bg-ke-green-light text-primary' : 'text-on-surface-variant hover:bg-surface-container' %>"
+        style="font-family: var(--font-family-label-caps); font-size: 14px;"
+        data-page="<%= item.href %>"
+      >
+        <span class="material-symbols-outlined <%= isActive ? 'fill' : '' %>" style="font-size: 22px;"><%= item.icon %></span>
+        <span><%= item.label %></span>
+      </a>
+    </li>
+    <% }); %>
+  </ul>
+
+  <!-- Bottom nav -->
+  <div class="px-3 pt-4 pb-6 border-t border-outline-variant">
+    <ul class="flex flex-col gap-1">
+      <% bottomItems.forEach(item => { %>
+      <li>
+        <a
+          href="<%= item.href %>"
+          <% if (!item.isLogout) { %>
+          hx-get="<%= item.href %>"
+          hx-target="#main-content"
+          hx-push-url="<%= item.href %>"
+          hx-swap="innerHTML"
+          hx-headers='{"HX-Request": "true"}'
+          <% } %>
+          class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors"
+          style="font-family: var(--font-family-label-caps); font-size: 13px;"
+        >
+          <span class="material-symbols-outlined" style="font-size: 20px;"><%= item.icon %></span>
+          <span><%= item.label %></span>
+        </a>
+      </li>
+      <% }); %>
+    </ul>
+  </div>
+
+</nav>
+
+<script>
+  document.addEventListener('htmx:afterSettle', function () {
+    const currentPath = window.location.pathname;
+    document.querySelectorAll('.nav-link').forEach(link => {
+      const page = link.getAttribute('data-page');
+      const isActive = currentPath === page || currentPath.startsWith(page + '/');
+      const icon = link.querySelector('.material-symbols-outlined');
+
+      if (isActive) {
+        link.classList.add('font-bold', 'border-l-4', 'border-primary', 'bg-ke-green-light', 'text-primary');
+        link.classList.remove('text-on-surface-variant', 'hover:bg-surface-container');
+        if (icon) icon.classList.add('fill');
+      } else {
+        link.classList.remove('font-bold', 'border-l-4', 'border-primary', 'bg-ke-green-light', 'text-primary');
+        link.classList.add('text-on-surface-variant', 'hover:bg-surface-container');
+        if (icon) icon.classList.remove('fill');
+      }
+    });
+  });
+</script>

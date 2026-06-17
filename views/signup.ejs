@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up - KeNIC Partner Portal</title>
+  <link rel="stylesheet" href="/css/output.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+
+<body class="bg-ke-surface text-on-surface min-h-screen flex items-center justify-center p-4" style="font-family: var(--font-family-body-md);">
+
+  <main class="w-full max-w-4xl bg-white rounded-xl shadow-lg flex flex-col md:flex-row overflow-hidden border-l-[3px] border-primary min-h-[600px]">
+
+    <!-- ── Left Banner / Branding ── -->
+    <div class="hidden md:flex flex-col justify-between w-2/5 relative p-6">
+      <!-- Background image -->
+      <div class="absolute inset-0 z-0">
+        <img
+          alt="Professional office"
+          class="w-full h-full object-cover"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuC98iT8ZvxJNbLYyp4EbC-iVKiZal96uO_kMFx4pjG3hr_UUyeuVBGKErbO5CkClvghmEvN-TC9cTFtpW8FNHD_6mRGiCRrerQdE9iiLlDPsWWAYVjkr3wkQF5KP4RtzbUXfN4Imq09CUU8TGZw5f7M5zk7YnKMo1WjalQWJv2Ukxpp7ByYRDyxGX-7xDbqqxiGWvdKyVJ-V_iGGdhgDEt0Tguw6Hv1jc5LVhHEp-JzK-orm0hMJQX5UbGrQL8IG60WNZLkaR7vqQ"
+        />
+        <div class="absolute inset-0" style="background-color: rgba(0,96,54,0.80); mix-blend-mode: multiply;"></div>
+        <div class="absolute inset-0" style="background: linear-gradient(to top, rgba(0,96,54,0.90), transparent);"></div>
+      </div>
+
+      <!-- Top: logo + description -->
+      <div class="relative z-10">
+        <div class="flex items-center gap-2 mb-8" style="font-family: var(--font-family-headline-lg); font-size: var(--font-size-headline-lg); font-weight: 900; color: #fff;">
+              <img src="/images/logokenic.png" alt="KeNIC" class="h-10 w-auto object-contain" />
+        </div>
+        <h1 class="text-white mb-2" style="font-family: var(--font-family-headline-md); font-size: var(--font-size-headline-md); line-height: var(--line-height-headline-md); font-weight: 700;">
+          Partner Portal
+        </h1>
+        <p class="text-white/90" style="font-family: var(--font-family-body-sm); font-size: var(--font-size-body-sm); line-height: var(--line-height-body-sm);">
+          Join the national registry ecosystem. Register domains, manage portfolios, and access authoritative resources.
+        </p>
+      </div>
+
+      
+      </div>
+    </div>
+
+    <!-- ── Form Section ── -->
+    <div class="w-full md:w-3/5 p-8 bg-white">
+
+      <!-- Mobile logo -->
+      <div class="mb-8 md:hidden">
+        <div class="flex items-center gap-2 text-primary font-black" style="font-family: var(--font-family-headline-lg); font-size: var(--font-size-headline-lg);">
+          <span class="material-symbols-outlined">language</span>
+          KeNIC Partner Portal
+        </div>
+      </div>
+
+      <h2 class="text-on-surface mb-4" style="font-family: var(--font-family-headline-sm); font-size: var(--font-size-headline-sm); line-height: var(--line-height-headline-sm); font-weight: 700;">
+        Create Partner Account
+      </h2>
+
+      <!-- Server-side error (EJS) -->
+      <% if (typeof error !== 'undefined' && error) { %>
+      <div class="mb-4 p-3 rounded border border-error bg-error-container text-on-error-container" style="font-family: var(--font-family-body-md); font-size: var(--font-size-body-md);">
+        <%= error %>
+      </div>
+      <% } %>
+
+      <form action="/signup" method="POST" class="space-y-8">
+
+        <!-- ── 01 Organization Details ── -->
+        <fieldset>
+          <legend class="w-full flex items-center gap-2 pb-1 mb-4 border-b border-surface-variant text-primary"
+            style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+            <span class="px-2 rounded-sm bg-ke-green-light text-primary"
+              style="font-family: var(--font-family-data-md); font-size: var(--font-size-data-md); font-weight: 500;">01</span>
+            Organization Details
+          </legend>
+
+          <div class="flex flex-col gap-4">
+            <!-- Organization Name -->
+            <div>
+              <label for="orgName" class="block mb-1 text-on-surface-variant"
+                style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+                Organization Name
+              </label>
+              <input
+                id="orgName" name="orgName" type="text" required
+                class="w-full bg-white border border-outline-variant rounded-lg px-3 py-2 text-on-surface shadow-sm transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                style="font-family: var(--font-family-body-md); font-size: var(--font-size-body-md);"
+              />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Organization Type -->
+              <div>
+                <label for="orgType" class="block mb-1 text-on-surface-variant"
+                  style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+                  Organization Type
+                </label>
+                <select
+                  id="orgType" name="orgType" required
+                  class="w-full bg-white border border-outline-variant rounded-lg px-3 py-2 text-on-surface shadow-sm transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  style="font-family: var(--font-family-body-md); font-size: var(--font-size-body-md);"
+                >
+                  <option value="" disabled selected>Select type</option>
+                  <option value="registrar">Accredited Registrar</option>
+                  <option value="reseller">Domain Reseller</option>
+                  <option value="corporate">Corporate Entity</option>
+                  <option value="government">Government Agency</option>
+                </select>
+              </div>
+
+              <!-- Industry -->
+              <div>
+                <label for="industry" class="block mb-1 text-on-surface-variant"
+                  style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+                  Industry
+                </label>
+                <input
+                  id="industry" name="industry" type="text" required
+                  class="w-full bg-white border border-outline-variant rounded-lg px-3 py-2 text-on-surface shadow-sm transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  style="font-family: var(--font-family-body-md); font-size: var(--font-size-body-md);"
+                />
+              </div>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- ── 02 Primary Contact ── -->
+        <fieldset>
+          <legend class="w-full flex items-center gap-2 pb-1 mb-4 border-b border-surface-variant text-primary"
+            style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+            <span class="px-2 rounded-sm bg-ke-green-light text-primary"
+              style="font-family: var(--font-family-data-md); font-size: var(--font-size-data-md); font-weight: 500;">02</span>
+            Primary Contact
+          </legend>
+
+          <div class="flex flex-col gap-4">
+            <!-- Full Name -->
+            <div>
+              <label for="contactName" class="block mb-1 text-on-surface-variant"
+                style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+                Full Name
+              </label>
+              <input
+                id="contactName" name="contactName" type="text" required
+                class="w-full bg-white border border-outline-variant rounded-lg px-3 py-2 text-on-surface shadow-sm transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                style="font-family: var(--font-family-body-md); font-size: var(--font-size-body-md);"
+              />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Work Email -->
+              <div>
+                <label for="workEmail" class="block mb-1 text-on-surface-variant"
+                  style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+                  Work Email
+                </label>
+                <input
+                  id="workEmail" name="workEmail" type="email" required
+                  class="w-full bg-white border border-outline-variant rounded-lg px-3 py-2 text-on-surface shadow-sm transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  style="font-family: var(--font-family-body-md); font-size: var(--font-size-body-md);"
+                />
+              </div>
+
+              <!-- Phone Number -->
+              <div>
+                <label for="phone" class="block mb-1 text-on-surface-variant"
+                  style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+                  Phone Number
+                </label>
+                <div class="relative rounded-lg shadow-sm">
+                  <span class="absolute inset-y-0 left-0 flex items-center pl-3 pr-3 rounded-l-lg border-r border-outline-variant bg-surface-variant text-on-surface-variant"
+                    style="font-family: var(--font-family-data-md); font-size: var(--font-size-data-md); font-weight: 500;">
+                    +254
+                  </span>
+                  <input
+                    id="phone" name="phone" type="tel" placeholder="700 000 000" required
+                    class="w-full bg-white border border-outline-variant rounded-lg pl-[68px] pr-3 py-2 text-on-surface transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                    style="font-family: var(--font-family-body-md); font-size: var(--font-size-body-md);"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Password -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label for="password" class="block mb-1 text-on-surface-variant"
+                  style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+                  Password
+                </label>
+                <div class="relative">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" style="font-size: 18px;">lock</span>
+                  <input
+                    id="password" name="password" type="password" required
+                    class="w-full bg-white border border-outline-variant rounded-lg pl-9 pr-3 py-2 text-on-surface shadow-sm transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                    style="font-family: var(--font-family-body-md); font-size: var(--font-size-body-md);"
+                  />
+                </div>
+              </div>
+              <div>
+                <label for="confirmPassword" class="block mb-1 text-on-surface-variant"
+                  style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+                  Confirm Password
+                </label>
+                <div class="relative">
+                  <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" style="font-size: 18px;">lock</span>
+                  <input
+                    id="confirmPassword" name="confirmPassword" type="password" required
+                    class="w-full bg-white border border-outline-variant rounded-lg pl-9 pr-3 py-2 text-on-surface shadow-sm transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                    style="font-family: var(--font-family-body-md); font-size: var(--font-size-body-md);"
+                  />
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </fieldset>
+
+        <!-- ── 03 Intent ──
+        <fieldset>
+          <legend class="w-full flex items-center gap-2 pb-1 mb-4 border-b border-surface-variant text-primary"
+            style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+            <span class="px-2 rounded-sm bg-ke-green-light text-primary"
+              style="font-family: var(--font-family-data-md); font-size: var(--font-size-data-md); font-weight: 500;">03</span>
+            Intent
+          </legend>
+
+          <div>
+            <label for="interest" class="block mb-1 text-on-surface-variant"
+              style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+              Partnership Interest
+            </label>
+            <textarea
+              id="interest" name="interest" rows="3" required
+              placeholder="Briefly describe your goals with KeNIC..."
+              class="w-full bg-white border border-outline-variant rounded-lg px-3 py-2 text-on-surface resize-none shadow-sm transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              style="font-family: var(--font-family-body-md); font-size: var(--font-size-body-md);"
+            ></textarea>
+          </div>
+        </fieldset> -->
+
+        <!-- ── Compliance checkbox ── -->
+        <div class="flex items-start gap-3 pt-2">
+          <div class="flex items-center h-5 mt-0.5">
+            <input
+              id="compliance" name="compliance" type="checkbox" required
+              class="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary focus:ring-2 bg-white"
+            />
+          </div>
+          <label for="compliance" class="text-on-surface-variant"
+            style="font-family: var(--font-family-body-sm); font-size: var(--font-size-body-sm); line-height: var(--line-height-body-sm);">
+            I agree to the KeNIC Partner Portal terms and confirm that all submitted data complies with the
+            <a href="#" class="text-primary font-medium hover:underline">Kenya Data Protection Act 2019</a>
+            and the KeNIC Privacy Policy.
+          </label>
+        </div>
+
+        <!-- ── Actions ── -->
+        <div class="pt-2 flex flex-col gap-3">
+          <button
+            type="submit"
+            class="w-full bg-primary hover:bg-ke-green-dark text-on-primary py-3 px-4 rounded-lg transition-colors duration-200 shadow-sm font-semibold tracking-wider uppercase"
+            style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); letter-spacing: 0.05em;"
+          >
+            Create Partner Account
+          </button>
+          <div class="text-center">
+            <a href="/login" class="text-on-surface-variant hover:text-primary transition-colors"
+              style="font-family: var(--font-family-body-sm); font-size: var(--font-size-body-sm);">
+              Already have an account? Login
+            </a>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </main>
+
+</body>
+</html>

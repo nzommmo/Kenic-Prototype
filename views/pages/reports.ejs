@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KeNIC Partner Portal – Reports</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap" rel="stylesheet"/>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-style: normal; font-size: 20px; line-height: 1; display: inline-block; vertical-align: middle; }
+    .bar-track { position: relative; height: 10px; background: #E5E7EB; border-radius: 4px; overflow: hidden; }
+    .bar-fill-green  { position: absolute; top:0; left:0; height:100%; background:#16A34A; border-radius:4px; }
+    .bar-fill-amber  { position: absolute; top:0; left:0; height:100%; background:#D97706; border-radius:4px; }
+    .bar-fill-red    { position: absolute; top:0; left:0; height:100%; background:#DC2626; border-radius:4px; }
+    .bar-fill-gray   { position: absolute; top:0; left:0; height:100%; background:#9CA3AF; border-radius:4px; }
+    .badge-green { display:inline-flex; align-items:center; gap:2px; font-size:11px; font-weight:600; color:#15803D; background:#F0FDF4; padding:2px 7px; border-radius:4px; }
+    .badge-red   { display:inline-flex; align-items:center; gap:2px; font-size:11px; font-weight:600; color:#B91C1C; background:#FEF2F2; padding:2px 7px; border-radius:4px; }
+    .badge-amber { display:inline-flex; align-items:center; gap:2px; font-size:11px; font-weight:600; color:#B45309; background:#FFFBEB; padding:2px 7px; border-radius:4px; }
+    .treemap-cell { display:flex; align-items:center; justify-content:center; text-align:center; color:#fff; font-family:'Inter',sans-serif; font-size:11px; font-weight:600; padding:4px; border-radius:4px; cursor:pointer; transition:opacity .15s; }
+    .treemap-cell:hover { opacity:.85; }
+    .section-label { font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#6B7280; }
+    .tab { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:background .15s, color .15s; }
+    .tab.active { background:#F0FDF4; color:#15803D; }
+    .tab:not(.active) { color:#6B7280; }
+    .tab:not(.active):hover { background:#F9FAFB; color:#374151; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900 antialiased">
+
+<div class="max-w-6xl mx-auto flex flex-col gap-6 p-6">
+
+  <!-- ── Page Header ── -->
+  <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-widest text-green-700 mb-1">Partner Ecosystem Portal</p>
+      <h1 class="font-display text-2xl font-bold text-gray-900">Reports &amp; Market Intelligence</h1>
+      <p class="text-sm text-gray-500 mt-1">Ecosystem analytics, opportunity signals &amp; domain market data · Q2 2026</p>
+    </div>
+    <div class="flex gap-2 flex-shrink-0">
+      <button class="flex items-center gap-1.5 border border-gray-200 bg-white text-gray-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
+        <span class="material-symbols-outlined" style="font-size:16px;">calendar_today</span>
+        Q2 2026
+        <span class="material-symbols-outlined" style="font-size:16px;">keyboard_arrow_down</span>
+      </button>
+      <button class="flex items-center gap-1.5 border border-gray-200 bg-white text-gray-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
+        <span class="material-symbols-outlined" style="font-size:16px;">download</span>
+        Export PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Report Tabs ── -->
+  <div class="flex gap-1 bg-white rounded-xl p-2 shadow-sm border border-gray-100 overflow-x-auto">
+    <span class="tab active">
+      <span class="material-symbols-outlined" style="font-size:15px;">insights</span>Market Intelligence
+    </span>
+    <span class="tab">
+      <span class="material-symbols-outlined" style="font-size:15px;">groups</span>Community Impact
+    </span>
+    <span class="tab">
+      <span class="material-symbols-outlined" style="font-size:15px;">handshake</span>Collaboration Activity
+    </span>
+    <span class="tab">
+      <span class="material-symbols-outlined" style="font-size:15px;">dns</span>Domain Portfolio
+    </span>
+    <span class="tab">
+      <span class="material-symbols-outlined" style="font-size:15px;">lightbulb</span>Innovation
+    </span>
+  </div>
+
+  <!-- ══ MARKET INTELLIGENCE TAB ══ -->
+
+  <!-- ── Row 1: Opportunity Signal + Insight Cards ── -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- Untapped Market Signal -->
+    <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-green-600 flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <span class="section-label">Market Opportunity</span>
+          <span class="material-symbols-outlined text-gray-400" style="font-size:18px;">info</span>
+        </div>
+        <div class="font-display text-4xl font-bold text-gray-900 leading-tight tracking-tight">1.72M</div>
+        <p class="text-sm text-gray-500 mt-1">SMEs without a .ke domain</p>
+      </div>
+      <div class="mt-5 pt-4 border-t border-gray-100">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-sm font-semibold text-gray-700">Penetration Gap</span>
+          <span class="badge-red">93.2% gap</span>
+        </div>
+        <div class="bar-track"><div class="bar-fill-red" style="width:93.2%"></div></div>
+        <p class="text-xs text-gray-400 mt-2 text-right">Only 6.8% adoption currently</p>
+      </div>
+      <div class="mt-4 pt-4 border-t border-gray-100 grid grid-cols-2 gap-3">
+        <div>
+          <p class="text-xs text-gray-400">Active Domains</p>
+          <p class="font-display text-lg font-bold text-gray-900 mt-0.5">3,847</p>
+        </div>
+        <div>
+          <p class="text-xs text-gray-400">Renewal Rate</p>
+          <p class="font-display text-lg font-bold text-gray-900 mt-0.5">87.4%
+            <span class="badge-red ml-1" style="font-size:10px;">↓1.2%</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insight Cards -->
+    <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center text-green-700">
+          <span class="material-symbols-outlined" style="font-size:18px;">trending_up</span>
+        </div>
+        <h3 class="font-display font-bold text-gray-900 text-sm leading-snug">Fintech is your fastest opportunity</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">Registration velocity in financial tech grew 24% MoM. Targeted co-campaigns recommended.</p>
+        <a href="#" class="text-xs font-semibold text-green-700 hover:underline mt-auto">Explore →</a>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+          <span class="material-symbols-outlined" style="font-size:18px;">location_on</span>
+        </div>
+        <h3 class="font-display font-bold text-gray-900 text-sm leading-snug">Mombasa is underserved</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">High SME density but lowest .ke adoption per capita outside Nairobi. Prime outreach region.</p>
+        <a href="#" class="text-xs font-semibold text-green-700 hover:underline mt-auto">View region →</a>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-red-500 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-600">
+          <span class="material-symbols-outlined" style="font-size:18px;">warning</span>
+        </div>
+        <h3 class="font-display font-bold text-gray-900 text-sm leading-snug">43 domains at risk</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">High-value corporate domains expiring in &lt;15 days with no auto-renew configured.</p>
+        <a href="#" class="text-xs font-semibold text-red-600 hover:underline mt-auto">Action required →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Row 2: Sector Opportunity + TLD Trends ── -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- Sector Opportunity by Gap -->
+    <div class="bg-white rounded-xl p-6 shadow-sm">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h2 class="font-display text-base font-bold text-gray-900">Sector Opportunity by Gap</h2>
+          <p class="text-xs text-gray-400 mt-0.5">SMEs without .ke domains, by industry</p>
+        </div>
+        <button class="text-xs font-semibold text-green-700 hover:underline">All sectors →</button>
+      </div>
+      <div class="flex flex-col gap-4">
+        <div>
+          <div class="flex justify-between mb-1.5">
+            <span class="text-sm font-medium text-gray-800">Retail &amp; E-commerce</span>
+            <span class="text-xs font-semibold text-gray-500">450k</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill-green" style="width:85%"></div></div>
+        </div>
+        <div>
+          <div class="flex justify-between mb-1.5">
+            <span class="text-sm font-medium text-gray-800">Agriculture</span>
+            <span class="text-xs font-semibold text-gray-500">320k</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill-green" style="width:65%; opacity:.85"></div></div>
+        </div>
+        <div>
+          <div class="flex justify-between mb-1.5">
+            <span class="text-sm font-medium text-gray-800">Manufacturing</span>
+            <span class="text-xs font-semibold text-gray-500">280k</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill-green" style="width:55%; opacity:.75"></div></div>
+        </div>
+        <div>
+          <div class="flex justify-between mb-1.5">
+            <span class="text-sm font-medium text-gray-800">Logistics &amp; Transport</span>
+            <span class="text-xs font-semibold text-gray-500">190k</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill-green" style="width:40%; opacity:.65"></div></div>
+        </div>
+        <div>
+          <div class="flex justify-between mb-1.5">
+            <span class="text-sm font-medium text-gray-800">Professional Services</span>
+            <span class="text-xs font-semibold text-gray-500">150k</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill-green" style="width:30%; opacity:.55"></div></div>
+        </div>
+        <div>
+          <div class="flex justify-between mb-1.5">
+            <span class="text-sm font-medium text-gray-800">Financial Services</span>
+            <span class="text-xs font-semibold text-gray-500">98k</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill-amber" style="width:22%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Competitor TLD Trends -->
+    <div class="bg-white rounded-xl p-6 shadow-sm flex flex-col">
+      <div class="flex items-center justify-between mb-4">
+        <div>
+          <h2 class="font-display text-base font-bold text-gray-900">Competitor TLD Trends</h2>
+          <p class="text-xs text-gray-400 mt-0.5">Year-to-date registration momentum</p>
+        </div>
+        <div class="flex gap-3 flex-shrink-0">
+          <span class="flex items-center gap-1.5 text-xs text-gray-500"><span class="w-2.5 h-2.5 rounded-full bg-green-600 inline-block"></span>.ke</span>
+          <span class="flex items-center gap-1.5 text-xs text-gray-500"><span class="w-2.5 h-2.5 rounded-full bg-gray-400 inline-block"></span>.com</span>
+          <span class="flex items-center gap-1.5 text-xs text-gray-500"><span class="w-2.5 h-2.5 rounded-full bg-gray-200 inline-block"></span>.africa</span>
+        </div>
+      </div>
+      <div class="flex-1 relative border-l border-b border-gray-200 mx-2 mt-2" style="min-height:180px;">
+        <!-- Y axis labels -->
+        <div class="absolute -left-7 top-0 bottom-0 flex flex-col justify-between text-right">
+          <span class="text-[10px] text-gray-400">High</span>
+          <span class="text-[10px] text-gray-400">Mid</span>
+          <span class="text-[10px] text-gray-400">Low</span>
+        </div>
+        <!-- Grid lines -->
+        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <line x1="0" y1="33" x2="100" y2="33" stroke="#F3F4F6" stroke-width="0.8"/>
+          <line x1="0" y1="66" x2="100" y2="66" stroke="#F3F4F6" stroke-width="0.8"/>
+          <!-- .africa -->
+          <path d="M0,80 Q30,75 50,85 T90,70 T100,65" fill="none" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <!-- .com -->
+          <path d="M0,40 Q20,35 40,45 T80,30 T100,22" fill="none" stroke="#9CA3AF" stroke-width="2"/>
+          <!-- .ke -->
+          <path d="M0,70 Q25,60 45,50 T75,35 T100,15" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+          <!-- .ke endpoint dot -->
+          <circle cx="100" cy="15" r="2.5" fill="#16A34A"/>
+        </svg>
+      </div>
+      <div class="flex justify-between text-gray-400 mt-2 mx-2 px-1" style="font-size:10px;">
+        <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+      </div>
+      <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+        <p class="text-xs text-gray-500">.ke outpacing .com registrations since <strong>March 2026</strong></p>
+        <span class="badge-green"><span class="material-symbols-outlined" style="font-size:12px;">arrow_upward</span>+12% vs .com</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Row 3: Regional Adoption Gap Heat Map ── -->
+  <div class="bg-white rounded-xl p-6 shadow-sm">
+    <div class="flex items-center justify-between mb-5">
+      <div>
+        <h2 class="font-display text-base font-bold text-gray-900">Regional Adoption Gap</h2>
+        <p class="text-xs text-gray-400 mt-0.5">Darker shading = larger gap between registered businesses and .ke domains</p>
+      </div>
+      <select class="border border-gray-200 rounded-lg text-xs font-medium py-1.5 px-3 bg-white text-gray-700 focus:outline-none focus:border-green-500">
+        <option>By County</option>
+        <option>By Region</option>
+      </select>
+    </div>
+
+    <div class="w-full h-48 flex gap-1.5">
+      <!-- Nairobi column -->
+      <div class="flex flex-col gap-1.5 w-1/3">
+        <div class="treemap-cell flex-grow-[2] relative group" style="background:#B91C1C; min-height:0;">
+          Nairobi
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity rounded">
+            <span class="text-xs font-bold">Gap: 450k</span>
+            <span style="font-size:10px;">Adoption: 15%</span>
+          </div>
+        </div>
+        <div class="treemap-cell flex-grow-[1] rounded" style="background:#DC2626; min-height:0;">Mombasa</div>
+      </div>
+      <!-- Mid column -->
+      <div class="flex flex-col gap-1.5 w-1/4">
+        <div class="treemap-cell flex-grow-[1]" style="background:#EF4444; min-height:0;">Kiambu</div>
+        <div class="flex gap-1.5 flex-grow-[1]" style="min-height:0;">
+          <div class="treemap-cell w-1/2" style="background:#F87171;">Nakuru</div>
+          <div class="treemap-cell w-1/2" style="background:#FCA5A5; color:#7f1d1d;">Machakos</div>
+        </div>
+      </div>
+      <!-- Remaining counties -->
+      <div class="flex flex-col gap-1.5 flex-1">
+        <div class="flex gap-1.5 flex-grow-[1]" style="min-height:0;">
+          <div class="treemap-cell w-1/3" style="background:#FECACA; color:#991b1b;">Kisumu</div>
+          <div class="treemap-cell w-2/3" style="background:#FEE2E2; color:#991b1b;">Uasin Gishu</div>
+        </div>
+        <div class="flex gap-1.5 flex-grow-[1]" style="min-height:0;">
+          <div class="treemap-cell w-1/2 border border-gray-200" style="background:#FFF1F2; color:#9ca3af;">Kajiado</div>
+          <div class="treemap-cell w-1/2 border border-gray-200" style="background:#FFF1F2; color:#9ca3af;">Kilifi</div>
+        </div>
+        <div class="treemap-cell flex-grow-[1] border border-gray-200" style="background:#F9FAFB; color:#9ca3af; min-height:0;">
+          38 other counties
+        </div>
+      </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="flex items-center gap-3 mt-4 pt-4 border-t border-gray-100">
+      <span class="text-xs text-gray-400">Gap intensity:</span>
+      <div class="flex items-center gap-1">
+        <div class="w-4 h-3 rounded" style="background:#B91C1C;"></div>
+        <div class="w-4 h-3 rounded" style="background:#EF4444;"></div>
+        <div class="w-4 h-3 rounded" style="background:#FCA5A5;"></div>
+        <div class="w-4 h-3 rounded" style="background:#FEE2E2;"></div>
+        <div class="w-4 h-3 rounded border border-gray-200" style="background:#F9FAFB;"></div>
+      </div>
+      <span class="text-xs text-gray-400">Critical → Low opportunity</span>
+      <div class="ml-auto flex gap-4 text-xs text-gray-500">
+        <span><strong class="text-red-600">Nairobi:</strong> 450k gap · 15% adoption</span>
+        <span><strong class="text-red-500">Mombasa:</strong> 180k gap · 11% adoption</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Row 4: Extension Breakdown + At-Risk Domains ── -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+    <!-- Extension Breakdown (moved from dashboard) -->
+    <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-green-600">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h2 class="font-display text-base font-bold text-gray-900">Extension Breakdown</h2>
+          <p class="text-xs text-gray-400 mt-0.5">Distribution across .ke namespace variants</p>
+        </div>
+        <span class="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded">3,847 total</span>
+      </div>
+      <div class="flex items-center gap-8">
+        <!-- Mini donut -->
+        <div class="relative w-28 h-28 flex-shrink-0">
+          <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#16A34A"   stroke-width="14" stroke-dasharray="143.3 238.9"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#4ADE80"   stroke-width="14" stroke-dasharray="47.7 238.9"  stroke-dashoffset="-143.3"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#D1D5DB"   stroke-width="14" stroke-dasharray="23.9 238.9"  stroke-dashoffset="-191"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#F3F4F6"   stroke-width="14" stroke-dasharray="23.9 238.9"  stroke-dashoffset="-214.9"/>
+          </svg>
+          <div class="absolute inset-0 flex flex-col items-center justify-center">
+            <span class="font-display text-base font-bold text-gray-900">3,847</span>
+            <span class="text-[9px] font-semibold uppercase tracking-widest text-gray-400">Domains</span>
+          </div>
+        </div>
+        <!-- Legend with bars -->
+        <div class="flex-1 space-y-3">
+          <div>
+            <div class="flex justify-between mb-1"><span class="text-xs text-gray-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-green-600 inline-block"></span>.co.ke</span><span class="text-xs font-semibold text-gray-500">60% · 2,308</span></div>
+            <div class="bar-track"><div class="bar-fill-green" style="width:60%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1"><span class="text-xs text-gray-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-green-300 inline-block"></span>.or.ke</span><span class="text-xs font-semibold text-gray-500">20% · 769</span></div>
+            <div class="bar-track"><div class="bar-fill-green" style="width:20%; background:#4ADE80"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1"><span class="text-xs text-gray-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-gray-300 inline-block"></span>.go.ke</span><span class="text-xs font-semibold text-gray-500">10% · 385</span></div>
+            <div class="bar-track"><div class="bar-fill-gray" style="width:10%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1"><span class="text-xs text-gray-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-gray-100 border border-gray-200 inline-block"></span>Other</span><span class="text-xs font-semibold text-gray-500">10% · 385</span></div>
+            <div class="bar-track"><div class="bar-fill-gray" style="width:10%; opacity:.5"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- At-Risk Domains (moved from dashboard) -->
+    <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-red-500">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h2 class="font-display text-base font-bold text-gray-900">At-Risk Domains</h2>
+          <p class="text-xs text-gray-400 mt-0.5">Expiring soon · no auto-renew configured</p>
+        </div>
+        <span class="badge-red">
+          <span class="material-symbols-outlined" style="font-size:12px;">warning</span>43 critical
+        </span>
+      </div>
+      <div class="space-y-3">
+        <!-- Domain rows -->
+        <div class="flex items-center justify-between py-2.5 border-b border-gray-100">
+          <div>
+            <p class="text-sm font-semibold text-gray-800">equitybankgroup.co.ke</p>
+            <p class="text-xs text-gray-400">Financial Services · High value</p>
+          </div>
+          <div class="text-right">
+            <span class="badge-red">3 days</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between py-2.5 border-b border-gray-100">
+          <div>
+            <p class="text-sm font-semibold text-gray-800">nairobitechweek.co.ke</p>
+            <p class="text-xs text-gray-400">Events &amp; Media · Medium value</p>
+          </div>
+          <div class="text-right">
+            <span class="badge-amber">8 days</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between py-2.5 border-b border-gray-100">
+          <div>
+            <p class="text-sm font-semibold text-gray-800">kenyabreweries.co.ke</p>
+            <p class="text-xs text-gray-400">Manufacturing · High value</p>
+          </div>
+          <div class="text-right">
+            <span class="badge-amber">12 days</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between py-2.5">
+          <div>
+            <p class="text-sm text-gray-500">+ 40 more domains expiring</p>
+          </div>
+          <button class="text-xs font-semibold text-red-600 hover:text-red-800 underline">View all →</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

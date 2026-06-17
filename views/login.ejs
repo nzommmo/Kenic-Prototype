@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - KeNIC Partner Portal</title>
+  <link rel="stylesheet" href="/css/output.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<body class="bg-ke-surface min-h-screen flex items-center justify-center p-4 md:p-8 text-on-surface" style="font-family: var(--font-family-body-md);">
+
+  <div class="w-full max-w-[1000px] bg-white rounded-xl shadow-lg flex overflow-hidden border-l-[3px] border-primary">
+
+    <!-- ── Brand / Image Side ── -->
+    <div class="hidden md:flex md:w-1/2 bg-surface flex-col justify-between relative overflow-hidden border-r border-outline-variant">
+      <!-- Background Image -->
+      <img
+        alt="Professional office"
+        class="absolute inset-0 w-full h-full object-cover"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuC98iT8ZvxJNbLYyp4EbC-iVKiZal96uO_kMFx4pjG3hr_UUyeuVBGKErbO5CkClvghmEvN-TC9cTFtpW8FNHD_6mRGiCRrerQdE9iiLlDPsWWAYVjkr3wkQF5KP4RtzbUXfN4Imq09CUU8TGZw5f7M5zk7YnKMo1WjalQWJv2Ukxpp7ByYRDyxGX-7xDbqqxiGWvdKyVJ-V_iGGdhgDEt0Tguw6Hv1jc5LVhHEp-JzK-orm0hMJQX5UbGrQL8IG60WNZLkaR7vqQ"
+      />
+      <!-- Gradient overlay for text readability -->
+      <div class="absolute inset-0" style="background: linear-gradient(to bottom right, rgba(252,248,248,0.95), rgba(252,248,248,0.85), rgba(252,248,248,0.90));"></div>
+
+      <div class="relative z-10 p-8 flex-1 flex flex-col justify-between">
+        <div>
+          <!-- Logo -->
+          <div class="flex items-center gap-2 mb-8">
+            <img src="/images/logokenic.png" alt="KeNIC" class="h-10 w-auto object-contain" />
+          </div>
+
+          <h1 class="text-on-background mb-2" style="font-family: var(--font-family-headline-xl); font-size: var(--font-size-headline-xl); line-height: var(--line-height-headline-xl); font-weight: 800; letter-spacing: -0.02em;">
+            Partner Portal
+          </h1>
+          <p class="text-on-surface-variant" style="font-family: var(--font-family-body-lg); font-size: var(--font-size-body-lg); line-height: var(--line-height-body-lg);">
+            Access your partnership intelligence.
+          </p>
+        </div>
+
+        <!-- Status badge
+        <div class="mt-12 p-4 rounded shadow-sm border-l-[3px] border-primary w-3/4" style="background: rgba(255,255,255,0.8); backdrop-filter: blur(4px);">
+          <p class="text-outline mb-1" style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); line-height: var(--line-height-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;">
+            System Status
+          </p>
+          <div class="flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-primary"></div>
+            <span class="text-on-surface" style="font-family: var(--font-family-data-md); font-size: var(--font-size-data-md); line-height: var(--line-height-data-md); font-weight: 500;">
+              All Services Operational
+            </span>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <!-- ── Login Form Side ── -->
+    <div class="w-full md:w-1/2 p-8 sm:p-12 flex flex-col justify-center bg-white">
+
+      <!-- Mobile logo -->
+      <div class="md:hidden flex items-center gap-2 mb-8 border-b border-outline-variant pb-4">
+        <span class="material-symbols-outlined text-primary" style="font-size:28px;">language</span>
+        <div>
+          <span class="text-on-background font-black block leading-none" style="font-family: var(--font-family-headline-md); font-size: var(--font-size-headline-md); line-height: var(--line-height-headline-md);">KeNIC</span>
+          <span class="text-on-surface-variant" style="font-family: var(--font-family-label-caps); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;">Partner Portal</span>
+        </div>
+      </div>
+
+      <h2 class="text-on-background mb-2" style="font-family: var(--font-family-headline-lg); font-size: var(--font-size-headline-lg); line-height: var(--line-height-headline-lg); font-weight: 700; letter-spacing: -0.01em;">
+        Sign In
+      </h2>
+      <p class="text-on-surface-variant mb-8" style="font-family: var(--font-family-body-md); font-size: var(--font-size-body-md); line-height: var(--line-height-body-md);">
+        Enter your credentials to access the registry.
+      </p>
+
+      <!-- Error message (shown by Express on failed login) -->
+      <% if (typeof error !== 'undefined' && error) { %>
+      <div class="mb-4 p-3 rounded border border-error bg-error-container text-on-error-container" style="font-family: var(--font-family-body-md); font-size: var(--font-size-body-md);">
+        <%= error %>
+      </div>
+      <% } %>
+
+      <form action="/login" method="POST" class="flex flex-col gap-4">
+
+        <!-- Email -->
+        <div class="flex flex-col gap-2">
+          <label
+            for="email"
+            class="text-on-surface"
+            style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); line-height: var(--line-height-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;"
+          >
+            Work Email
+          </label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" style="font-size:20px;">mail</span>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="admin@registrar.co.ke"
+              required
+              class="w-full pl-10 pr-3 py-2 bg-white border border-ke-gray/30 rounded text-on-surface transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              style="font-family: var(--font-family-data-md); font-size: var(--font-size-data-md); line-height: var(--line-height-data-md); font-weight: 500;"
+            />
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="flex flex-col gap-2">
+          <div class="flex justify-between items-center">
+            <label
+              for="password"
+              class="text-on-surface"
+              style="font-family: var(--font-family-label-caps); font-size: var(--font-size-label-caps); line-height: var(--line-height-label-caps); letter-spacing: 0.05em; font-weight: 600; text-transform: uppercase;"
+            >
+              Password
+            </label>
+            <a
+              href="/forgot-password"
+              class="text-primary hover:text-ke-green-dark transition-colors font-medium"
+              style="font-family: var(--font-family-body-sm); font-size: var(--font-size-body-sm); line-height: var(--line-height-body-sm);"
+            >
+              Forgot Password?
+            </a>
+          </div>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline" style="font-size:20px;">lock</span>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="••••••••"
+              required
+              class="w-full pl-10 pr-10 py-2 bg-white border border-ke-gray/30 rounded text-on-surface transition-colors focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+              style="font-family: var(--font-family-data-md); font-size: var(--font-size-data-md); line-height: var(--line-height-data-md); font-weight: 500;"
+            />
+            <!-- Toggle visibility (JS-powered) -->
+            <button
+              type="button"
+              id="toggle-password"
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors focus:outline-none"
+              aria-label="Toggle password visibility"
+            >
+              <span class="material-symbols-outlined" style="font-size:20px;" id="toggle-icon">visibility_off</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          class="w-full bg-primary hover:bg-ke-green-dark text-on-primary py-3 rounded mt-2 transition-colors shadow-sm flex justify-center items-center gap-2 font-bold"
+          style="font-family: var(--font-family-headline-sm); font-size: var(--font-size-headline-sm); line-height: var(--line-height-headline-sm);"
+        >
+          Login
+          <span class="material-symbols-outlined" style="font-size:20px;">arrow_forward</span>
+        </button>
+      </form>
+
+      <!-- Sign up link -->
+      <div class="mt-8 text-center">
+        <p class="text-on-surface-variant" style="font-family: var(--font-family-body-sm); font-size: var(--font-size-body-sm); line-height: var(--line-height-body-sm);">
+          Don't have an account?
+          <a href="/signup" class="text-primary font-bold hover:text-ke-green-dark transition-colors">Sign up</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Password visibility toggle
+    const toggleBtn = document.getElementById('toggle-password');
+    const passwordInput = document.getElementById('password');
+    const toggleIcon = document.getElementById('toggle-icon');
+
+    toggleBtn.addEventListener('click', () => {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+      toggleIcon.textContent = isPassword ? 'visibility' : 'visibility_off';
+    });
+  </script>
+</body>
+</html>

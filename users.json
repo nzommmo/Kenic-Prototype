@@ -1,0 +1,21 @@
+[
+  {
+    "email": "eric@dotsavvyafrica.com",
+    "password": "$2b$10$Vw8LRYTwPrdEsKAGjaqzzunTIBRKjO5PgjOP55qakJvCOMoX1ZG/C",
+    "name": "Eric Nzomo",
+    "org": "Dotsavvy",
+    "orgType": "reseller",
+    "industry": "Digital Agency",
+    "phone": "757876614",
+    "interest": "lorem"
+  },
+  {
+    "email": "eric@dotsavvyafrica1.com",
+    "password": "$2b$10$fNMM7UoYuyVg74HzRbPbyOPmAvBIBEYNRJCFF.YwUZe2mn9CjsmRe",
+    "name": "Eric Nzomo",
+    "org": "Test",
+    "orgType": "registrar",
+    "industry": "Digital Agency",
+    "phone": "0725099543"
+  }
+]
