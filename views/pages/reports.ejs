@@ -16,16 +16,28 @@
     .bar-fill-amber  { position: absolute; top:0; left:0; height:100%; background:#D97706; border-radius:4px; }
     .bar-fill-red    { position: absolute; top:0; left:0; height:100%; background:#DC2626; border-radius:4px; }
     .bar-fill-gray   { position: absolute; top:0; left:0; height:100%; background:#9CA3AF; border-radius:4px; }
+    .bar-fill-blue   { position: absolute; top:0; left:0; height:100%; background:#2563EB; border-radius:4px; }
     .badge-green { display:inline-flex; align-items:center; gap:2px; font-size:11px; font-weight:600; color:#15803D; background:#F0FDF4; padding:2px 7px; border-radius:4px; }
     .badge-red   { display:inline-flex; align-items:center; gap:2px; font-size:11px; font-weight:600; color:#B91C1C; background:#FEF2F2; padding:2px 7px; border-radius:4px; }
     .badge-amber { display:inline-flex; align-items:center; gap:2px; font-size:11px; font-weight:600; color:#B45309; background:#FFFBEB; padding:2px 7px; border-radius:4px; }
+    .badge-blue  { display:inline-flex; align-items:center; gap:2px; font-size:11px; font-weight:600; color:#1D4ED8; background:#EFF6FF; padding:2px 7px; border-radius:4px; }
+    .badge-gray  { display:inline-flex; align-items:center; gap:2px; font-size:11px; font-weight:600; color:#374151; background:#F3F4F6; padding:2px 7px; border-radius:4px; }
+    .chip { font-size:10px; font-weight:700; padding:2px 8px; border-radius:999px; background:#F3F4F6; color:#4B5563; white-space:nowrap; }
     .treemap-cell { display:flex; align-items:center; justify-content:center; text-align:center; color:#fff; font-family:'Inter',sans-serif; font-size:11px; font-weight:600; padding:4px; border-radius:4px; cursor:pointer; transition:opacity .15s; }
     .treemap-cell:hover { opacity:.85; }
     .section-label { font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:#6B7280; }
-    .tab { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:background .15s, color .15s; }
+    .tab { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border-radius:8px; font-size:13px; font-weight:600; cursor:pointer; transition:background .15s, color .15s; white-space:nowrap; }
     .tab.active { background:#F0FDF4; color:#15803D; }
     .tab:not(.active) { color:#6B7280; }
     .tab:not(.active):hover { background:#F9FAFB; color:#374151; }
+    .tab-panel { display:none; }
+    .tab-panel.active-panel { display:flex; flex-direction:column; gap:24px; }
+    .kpi-card { background:#fff; border:1px solid #F3F4F6; border-radius:12px; padding:14px; box-shadow:0 1px 2px rgba(0,0,0,.03); display:flex; flex-direction:column; gap:6px; }
+    .kanban-col { background:#F9FAFB; border-radius:10px; padding:10px; display:flex; flex-direction:column; gap:8px; min-height:160px; }
+    .kanban-card { background:#fff; border:1px solid #E5E7EB; border-radius:8px; padding:8px 10px; font-size:12px; color:#374151; box-shadow:0 1px 1px rgba(0,0,0,.02); }
+    .funnel-bar { height:36px; border-radius:6px; display:flex; align-items:center; justify-content:space-between; padding:0 14px; color:#fff; font-size:12px; font-weight:600; }
+    .timeline-rail { position:relative; height:3px; background:#E5E7EB; border-radius:3px; }
+    .timeline-dot { width:11px; height:11px; border-radius:50%; background:#16A34A; border:2px solid #fff; box-shadow:0 0 0 1px #16A34A; flex-shrink:0; }
   </style>
 </head>
 <body class="bg-gray-100 text-gray-900 antialiased">
@@ -36,8 +48,8 @@
   <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
     <div>
       <p class="text-xs font-semibold uppercase tracking-widest text-green-700 mb-1">Partner Ecosystem Portal</p>
-      <h1 class="font-display text-2xl font-bold text-gray-900">Reports &amp; Market Intelligence</h1>
-      <p class="text-sm text-gray-500 mt-1">Ecosystem analytics, opportunity signals &amp; domain market data · Q2 2026</p>
+      <h1 class="font-display text-2xl font-bold text-gray-900">Reports &amp; Ecosystem Intelligence</h1>
+      <p class="text-sm text-gray-500 mt-1">Partnership impact, reach, collaboration &amp; ecosystem growth · Q2 2026</p>
     </div>
     <div class="flex gap-2 flex-shrink-0">
       <button class="flex items-center gap-1.5 border border-gray-200 bg-white text-gray-700 text-sm font-medium px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors shadow-sm">
@@ -52,293 +64,945 @@
     </div>
   </div>
 
-  <!-- ── Report Tabs ── -->
+  <!-- ── Report Tabs (10 categories from the Metrics Framework) ── -->
   <div class="flex gap-1 bg-white rounded-xl p-2 shadow-sm border border-gray-100 overflow-x-auto">
-    <span class="tab active">
-      <span class="material-symbols-outlined" style="font-size:15px;">insights</span>Market Intelligence
-    </span>
-    <span class="tab">
-      <span class="material-symbols-outlined" style="font-size:15px;">groups</span>Community Impact
-    </span>
-    <span class="tab">
-      <span class="material-symbols-outlined" style="font-size:15px;">handshake</span>Collaboration Activity
-    </span>
-    <span class="tab">
-      <span class="material-symbols-outlined" style="font-size:15px;">dns</span>Domain Portfolio
-    </span>
-    <span class="tab">
-      <span class="material-symbols-outlined" style="font-size:15px;">lightbulb</span>Innovation
-    </span>
+    <span class="tab active" onclick="showTab('panel-impact', this)"><span class="material-symbols-outlined" style="font-size:15px;">workspace_premium</span>Partnership Impact</span>
+    <span class="tab" onclick="showTab('panel-reach', this)"><span class="material-symbols-outlined" style="font-size:15px;">campaign</span>Ecosystem Reach</span>
+    <span class="tab" onclick="showTab('panel-collab', this)"><span class="material-symbols-outlined" style="font-size:15px;">hub</span>Strategic Collaboration</span>
+    <span class="tab" onclick="showTab('panel-contribution', this)"><span class="material-symbols-outlined" style="font-size:15px;">volunteer_activism</span>Ecosystem Contribution</span>
+    <span class="tab" onclick="showTab('panel-community', this)"><span class="material-symbols-outlined" style="font-size:15px;">groups</span>Community Impact</span>
+    <span class="tab" onclick="showTab('panel-enablement', this)"><span class="material-symbols-outlined" style="font-size:15px;">integration_instructions</span>Digital Enablement</span>
+    <span class="tab" onclick="showTab('panel-advocacy', this)"><span class="material-symbols-outlined" style="font-size:15px;">record_voice_over</span>Ecosystem Advocacy</span>
+    <span class="tab" onclick="showTab('panel-innovation', this)"><span class="material-symbols-outlined" style="font-size:15px;">lightbulb</span>Innovation Contribution</span>
+    <span class="tab" onclick="showTab('panel-opportunity', this)"><span class="material-symbols-outlined" style="font-size:15px;">explore</span>Opportunity Intelligence</span>
+    <span class="tab" onclick="showTab('panel-market', this)"><span class="material-symbols-outlined" style="font-size:15px;">query_stats</span>Market Intelligence</span>
   </div>
 
-  <!-- ══ MARKET INTELLIGENCE TAB ══ -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- 1. PARTNERSHIP IMPACT                                          -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div id="panel-impact" class="tab-panel active-panel">
 
-  <!-- ── Row 1: Opportunity Signal + Insight Cards ── -->
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Hero: Partnership Impact Score -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-green-600 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="section-label">Partnership Impact Score</span>
+            <span class="material-symbols-outlined text-gray-400" style="font-size:18px;">info</span>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="font-display text-5xl font-bold text-gray-900 leading-tight tracking-tight">78</span>
+            <span class="text-gray-400 text-lg font-medium">/100</span>
+          </div>
+          <p class="text-sm text-gray-500 mt-1">Composite ecosystem contribution &amp; collaboration strength</p>
+        </div>
+        <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between">
+          <span class="badge-green"><span class="material-symbols-outlined" style="font-size:12px;">arrow_upward</span>+4 pts QoQ</span>
+          <span class="text-xs text-gray-400">Strong ecosystem engagement</span>
+        </div>
+      </div>
 
-    <!-- Untapped Market Signal -->
-    <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-green-600 flex flex-col justify-between">
-      <div>
-        <div class="flex items-center justify-between mb-3">
-          <span class="section-label">Market Opportunity</span>
-          <span class="material-symbols-outlined text-gray-400" style="font-size:18px;">info</span>
-        </div>
-        <div class="font-display text-4xl font-bold text-gray-900 leading-tight tracking-tight">1.72M</div>
-        <p class="text-sm text-gray-500 mt-1">SMEs without a .ke domain</p>
-      </div>
-      <div class="mt-5 pt-4 border-t border-gray-100">
-        <div class="flex items-center justify-between mb-2">
-          <span class="text-sm font-semibold text-gray-700">Penetration Gap</span>
-          <span class="badge-red">93.2% gap</span>
-        </div>
-        <div class="bar-track"><div class="bar-fill-red" style="width:93.2%"></div></div>
-        <p class="text-xs text-gray-400 mt-2 text-right">Only 6.8% adoption currently</p>
-      </div>
-      <div class="mt-4 pt-4 border-t border-gray-100 grid grid-cols-2 gap-3">
-        <div>
-          <p class="text-xs text-gray-400">Active Domains</p>
-          <p class="font-display text-lg font-bold text-gray-900 mt-0.5">3,847</p>
-        </div>
-        <div>
-          <p class="text-xs text-gray-400">Renewal Rate</p>
-          <p class="font-display text-lg font-bold text-gray-900 mt-0.5">87.4%
-            <span class="badge-red ml-1" style="font-size:10px;">↓1.2%</span>
-          </p>
+      <!-- Score breakdown -->
+      <div class="lg:col-span-2 bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-4">Score Breakdown</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
+          <div>
+            <div class="flex justify-between mb-1.5"><span class="text-sm text-gray-700">Initiative participation</span><span class="text-xs font-semibold text-gray-500">82</span></div>
+            <div class="bar-track"><div class="bar-fill-green" style="width:82%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1.5"><span class="text-sm text-gray-700">Ecosystem contribution</span><span class="text-xs font-semibold text-gray-500">75</span></div>
+            <div class="bar-track"><div class="bar-fill-green" style="width:75%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1.5"><span class="text-sm text-gray-700">Strategic engagement</span><span class="text-xs font-semibold text-gray-500">80</span></div>
+            <div class="bar-track"><div class="bar-fill-green" style="width:80%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1.5"><span class="text-sm text-gray-700">Collaboration activity</span><span class="text-xs font-semibold text-gray-500">88</span></div>
+            <div class="bar-track"><div class="bar-fill-green" style="width:88%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1.5"><span class="text-sm text-gray-700">Innovation participation</span><span class="text-xs font-semibold text-gray-500">64</span></div>
+            <div class="bar-track"><div class="bar-fill-amber" style="width:64%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between mb-1.5"><span class="text-sm text-gray-700">Responsiveness</span><span class="text-xs font-semibold text-gray-500">91</span></div>
+            <div class="bar-track"><div class="bar-fill-green" style="width:91%"></div></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Insight Cards -->
-    <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Supporting Indicators -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="kpi-card">
+        <span class="text-xs text-gray-400">Partner Ecosystem Rank</span>
+        <span class="font-display text-2xl font-bold text-gray-900">#18 <span class="text-sm font-medium text-gray-400">of 248</span></span>
+        <span class="badge-green w-fit"><span class="material-symbols-outlined" style="font-size:12px;">arrow_upward</span>3 places</span>
+      </div>
+      <div class="kpi-card">
+        <span class="text-xs text-gray-400">Contribution Trend</span>
+        <svg viewBox="0 0 100 30" class="w-full h-8" preserveAspectRatio="none"><path d="M0,25 Q20,22 35,18 T65,12 T100,4" fill="none" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <span class="badge-green w-fit">+12% · 2 quarters</span>
+      </div>
+      <div class="kpi-card">
+        <span class="text-xs text-gray-400">Quarterly Growth Trend</span>
+        <span class="font-display text-2xl font-bold text-gray-900">+6.4%</span>
+        <span class="text-xs text-gray-400">vs. previous quarter</span>
+      </div>
+      <div class="kpi-card">
+        <span class="text-xs text-gray-400">Strategic Alignment Status</span>
+        <span class="badge-green w-fit text-[13px] py-1 px-2.5"><span class="material-symbols-outlined" style="font-size:13px;">verified</span>Aligned</span>
+        <span class="text-xs text-gray-400">Meets quarterly objectives</span>
+      </div>
+    </div>
 
-      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex flex-col gap-3">
-        <div class="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center text-green-700">
-          <span class="material-symbols-outlined" style="font-size:18px;">trending_up</span>
+    <!-- Leaderboard -->
+    <div class="bg-white rounded-xl p-6 shadow-sm">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="font-display text-base font-bold text-gray-900">Top Partners by Impact Score</h2>
+        <button class="text-xs font-semibold text-green-700 hover:underline">View full ranking →</button>
+      </div>
+      <div class="flex flex-col divide-y divide-gray-100">
+        <div class="flex items-center gap-4 py-3">
+          <span class="font-display text-sm font-bold text-gray-400 w-5">1</span>
+          <div class="flex-1">
+            <div class="flex items-center gap-2"><span class="text-sm font-semibold text-gray-800">Safaricom PLC</span><span class="chip">Technology company</span></div>
+            <div class="bar-track mt-1.5"><div class="bar-fill-green" style="width:94%"></div></div>
+          </div>
+          <span class="text-sm font-bold text-gray-900 w-8 text-right">94</span>
         </div>
-        <h3 class="font-display font-bold text-gray-900 text-sm leading-snug">Fintech is your fastest opportunity</h3>
-        <p class="text-xs text-gray-500 leading-relaxed">Registration velocity in financial tech grew 24% MoM. Targeted co-campaigns recommended.</p>
+        <div class="flex items-center gap-4 py-3">
+          <span class="font-display text-sm font-bold text-gray-400 w-5">2</span>
+          <div class="flex-1">
+            <div class="flex items-center gap-2"><span class="text-sm font-semibold text-gray-800">iHub Nairobi</span><span class="chip">Ecosystem enabler</span></div>
+            <div class="bar-track mt-1.5"><div class="bar-fill-green" style="width:91%"></div></div>
+          </div>
+          <span class="text-sm font-bold text-gray-900 w-8 text-right">91</span>
+        </div>
+        <div class="flex items-center gap-4 py-3">
+          <span class="font-display text-sm font-bold text-gray-400 w-5">3</span>
+          <div class="flex-1">
+            <div class="flex items-center gap-2"><span class="text-sm font-semibold text-gray-800">University of Nairobi</span><span class="chip">University</span></div>
+            <div class="bar-track mt-1.5"><div class="bar-fill-green" style="width:87%"></div></div>
+          </div>
+          <span class="text-sm font-bold text-gray-900 w-8 text-right">87</span>
+        </div>
+        <div class="flex items-center gap-4 py-3">
+          <span class="font-display text-sm font-bold text-gray-400 w-5">4</span>
+          <div class="flex-1">
+            <div class="flex items-center gap-2"><span class="text-sm font-semibold text-gray-800">Kenya ICT Authority</span><span class="chip">Government institution</span></div>
+            <div class="bar-track mt-1.5"><div class="bar-fill-green" style="width:85%; opacity:.9"></div></div>
+          </div>
+          <span class="text-sm font-bold text-gray-900 w-8 text-right">85</span>
+        </div>
+        <div class="flex items-center gap-4 py-3">
+          <span class="font-display text-sm font-bold text-gray-400 w-5">5</span>
+          <div class="flex-1">
+            <div class="flex items-center gap-2"><span class="text-sm font-semibold text-gray-800">Truehost Cloud Services</span><span class="chip">Registrar</span></div>
+            <div class="bar-track mt-1.5"><div class="bar-fill-green" style="width:81%; opacity:.85"></div></div>
+          </div>
+          <span class="text-sm font-bold text-gray-900 w-8 text-right">81</span>
+        </div>
+        <div class="flex items-center gap-4 py-3">
+          <span class="font-display text-sm font-bold text-gray-400 w-5">6</span>
+          <div class="flex-1">
+            <div class="flex items-center gap-2"><span class="text-sm font-semibold text-gray-800">Tech4Dev Kenya</span><span class="chip">NGO</span></div>
+            <div class="bar-track mt-1.5"><div class="bar-fill-green" style="width:78%; opacity:.8"></div></div>
+          </div>
+          <span class="text-sm font-bold text-gray-900 w-8 text-right">78</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- 2. ECOSYSTEM REACH                                             -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div id="panel-reach" class="tab-panel">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div class="kpi-card"><span class="text-xs text-gray-400">Total Campaign Reach</span><span class="font-display text-xl font-bold text-gray-900">2.4M</span><span class="badge-green w-fit">+18%</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Webinar Attendees</span><span class="font-display text-xl font-bold text-gray-900">8,450</span><span class="badge-green w-fit">+9%</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Event Participation</span><span class="font-display text-xl font-bold text-gray-900">124</span><span class="badge-green w-fit">+6%</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Content Engagement</span><span class="font-display text-xl font-bold text-gray-900">61.2K</span><span class="badge-green w-fit">+14%</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Community Outreach Vol.</span><span class="font-display text-xl font-bold text-gray-900">340</span><span class="badge-green w-fit">+5%</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Audience Growth</span><span class="font-display text-xl font-bold text-gray-900">+18%</span><span class="text-xs text-gray-400">QoQ</span></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Reach Trend Over Time</h2>
+        <p class="text-xs text-gray-400 mb-4">Cumulative ecosystem audience reached, monthly</p>
+        <svg viewBox="0 0 100 60" class="w-full" preserveAspectRatio="none" style="height:160px;">
+          <line x1="0" y1="20" x2="100" y2="20" stroke="#F3F4F6" stroke-width="0.8"/>
+          <line x1="0" y1="40" x2="100" y2="40" stroke="#F3F4F6" stroke-width="0.8"/>
+          <path d="M0,52 Q18,48 32,42 T58,28 T100,6" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="100" cy="6" r="2.5" fill="#16A34A"/>
+        </svg>
+        <div class="flex justify-between text-gray-400 mt-1 px-1" style="font-size:10px;"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Audience Growth</h2>
+        <p class="text-xs text-gray-400 mb-4">New ecosystem audience added per month</p>
+        <div class="flex items-end gap-3 px-1" style="height:140px;">
+          <div class="flex-1 bg-green-200 rounded-t" style="height:35%"></div>
+          <div class="flex-1 bg-green-300 rounded-t" style="height:48%"></div>
+          <div class="flex-1 bg-green-400 rounded-t" style="height:55%"></div>
+          <div class="flex-1 bg-green-500 rounded-t" style="height:68%"></div>
+          <div class="flex-1 bg-green-600 rounded-t" style="height:82%"></div>
+          <div class="flex-1 bg-green-700 rounded-t" style="height:100%"></div>
+        </div>
+        <div class="flex justify-between text-gray-400 mt-1 px-1" style="font-size:10px;"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Engagement Heatmap</h2>
+        <p class="text-xs text-gray-400 mb-4">Weekly content &amp; campaign engagement intensity</p>
+        <div class="grid grid-cols-6 gap-1.5">
+          <div class="treemap-cell" style="background:#DCFCE7; color:#166534; aspect-ratio:1;">W1</div>
+          <div class="treemap-cell" style="background:#86EFAC; color:#14532D; aspect-ratio:1;">W2</div>
+          <div class="treemap-cell" style="background:#4ADE80; aspect-ratio:1;">W3</div>
+          <div class="treemap-cell" style="background:#22C55E; aspect-ratio:1;">W4</div>
+          <div class="treemap-cell" style="background:#16A34A; aspect-ratio:1;">W5</div>
+          <div class="treemap-cell" style="background:#15803D; aspect-ratio:1;">W6</div>
+          <div class="treemap-cell" style="background:#86EFAC; color:#14532D; aspect-ratio:1;">W7</div>
+          <div class="treemap-cell" style="background:#4ADE80; aspect-ratio:1;">W8</div>
+          <div class="treemap-cell" style="background:#16A34A; aspect-ratio:1;">W9</div>
+          <div class="treemap-cell" style="background:#15803D; aspect-ratio:1;">W10</div>
+          <div class="treemap-cell" style="background:#166534; aspect-ratio:1;">W11</div>
+          <div class="treemap-cell" style="background:#14532D; aspect-ratio:1;">W12</div>
+        </div>
+        <div class="flex items-center gap-2 mt-4 text-xs text-gray-400"><span>Low</span><div class="flex-1 h-2 rounded" style="background:linear-gradient(90deg,#DCFCE7,#14532D);"></div><span>High</span></div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Campaign Performance Comparison</h2>
+        <p class="text-xs text-gray-400 mb-4">Reach by campaign, this quarter</p>
+        <div class="flex flex-col gap-4">
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Digital SME Week</span><span class="text-xs font-semibold text-gray-500">620k</span></div><div class="bar-track"><div class="bar-fill-green" style="width:100%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Schools Connectivity Drive</span><span class="text-xs font-semibold text-gray-500">410k</span></div><div class="bar-track"><div class="bar-fill-green" style="width:66%; opacity:.85"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Fintech Innovation Forum</span><span class="text-xs font-semibold text-gray-500">350k</span></div><div class="bar-track"><div class="bar-fill-green" style="width:56%; opacity:.7"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">DNS Security Roadshow</span><span class="text-xs font-semibold text-gray-500">280k</span></div><div class="bar-track"><div class="bar-fill-green" style="width:45%; opacity:.6"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- 3. STRATEGIC COLLABORATION                                     -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div id="panel-collab" class="tab-panel">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div class="kpi-card"><span class="text-xs text-gray-400">Active Initiatives</span><span class="font-display text-xl font-bold text-gray-900">34</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Completed Initiatives</span><span class="font-display text-xl font-bold text-gray-900">89</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Participation Rate</span><span class="font-display text-xl font-bold text-gray-900">76%</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Milestone Completion</span><span class="font-display text-xl font-bold text-gray-900">68%</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Joint Campaigns</span><span class="font-display text-xl font-bold text-gray-900">21</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Cross-Org Activities</span><span class="font-display text-xl font-bold text-gray-900">57</span></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-4">Initiative Progress Dashboard</h2>
+        <div class="flex flex-col gap-4">
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Digital SME Accelerator</span><span class="text-xs font-semibold text-gray-500">80%</span></div><div class="bar-track"><div class="bar-fill-green" style="width:80%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Registrar Capacity Building</span><span class="text-xs font-semibold text-gray-500">92%</span></div><div class="bar-track"><div class="bar-fill-green" style="width:92%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">DNS Security Roadshow</span><span class="text-xs font-semibold text-gray-500">60%</span></div><div class="bar-track"><div class="bar-fill-amber" style="width:60%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Schools Connectivity Drive</span><span class="text-xs font-semibold text-gray-500">45%</span></div><div class="bar-track"><div class="bar-fill-amber" style="width:45%"></div></div></div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Initiative Status Distribution</h2>
+        <p class="text-xs text-gray-400 mb-4">Across all active partnership initiatives</p>
+        <div class="flex items-center gap-8">
+          <div class="relative w-28 h-28 flex-shrink-0">
+            <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#16A34A" stroke-width="14" stroke-dasharray="90.7 238.9"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#4ADE80" stroke-width="14" stroke-dasharray="97.9 238.9" stroke-dashoffset="-90.7"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#D97706" stroke-width="14" stroke-dasharray="33.4 238.9" stroke-dashoffset="-188.6"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#DC2626" stroke-width="14" stroke-dasharray="16.7 238.9" stroke-dashoffset="-222"/>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span class="font-display text-base font-bold text-gray-900">123</span>
+              <span class="text-[9px] font-semibold uppercase tracking-widest text-gray-400">Initiatives</span>
+            </div>
+          </div>
+          <div class="flex-1 space-y-2.5">
+            <div class="flex justify-between text-xs"><span class="flex items-center gap-1.5 text-gray-700"><span class="w-2.5 h-2.5 rounded bg-green-600 inline-block"></span>Active</span><span class="font-semibold text-gray-500">38%</span></div>
+            <div class="flex justify-between text-xs"><span class="flex items-center gap-1.5 text-gray-700"><span class="w-2.5 h-2.5 rounded bg-green-300 inline-block"></span>Completed</span><span class="font-semibold text-gray-500">41%</span></div>
+            <div class="flex justify-between text-xs"><span class="flex items-center gap-1.5 text-gray-700"><span class="w-2.5 h-2.5 rounded bg-amber-500 inline-block"></span>Planned</span><span class="font-semibold text-gray-500">14%</span></div>
+            <div class="flex justify-between text-xs"><span class="flex items-center gap-1.5 text-gray-700"><span class="w-2.5 h-2.5 rounded bg-red-500 inline-block"></span>At risk</span><span class="font-semibold text-gray-500">7%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-5">Collaboration Timeline</h2>
+        <div class="relative px-2">
+          <div class="timeline-rail"></div>
+          <div class="flex justify-between -mt-1.5">
+            <div class="flex flex-col items-center gap-2 w-1/4"><div class="timeline-dot"></div><span class="text-xs font-semibold text-gray-700 text-center">Q1 Kickoff</span><span class="text-[10px] text-gray-400 text-center">6 initiatives launched</span></div>
+            <div class="flex flex-col items-center gap-2 w-1/4"><div class="timeline-dot"></div><span class="text-xs font-semibold text-gray-700 text-center">Q2 Milestone Review</span><span class="text-[10px] text-gray-400 text-center">68% on track</span></div>
+            <div class="flex flex-col items-center gap-2 w-1/4"><div class="timeline-dot"></div><span class="text-xs font-semibold text-gray-700 text-center">Joint Campaign Launch</span><span class="text-[10px] text-gray-400 text-center">DNS Security Roadshow</span></div>
+            <div class="flex flex-col items-center gap-2 w-1/4"><div class="timeline-dot" style="background:#D1D5DB; box-shadow:0 0 0 1px #D1D5DB;"></div><span class="text-xs font-semibold text-gray-400 text-center">Q3 Planning</span><span class="text-[10px] text-gray-400 text-center">Upcoming</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm flex flex-col">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Partnership Activity Trend</h2>
+        <p class="text-xs text-gray-400 mb-4">Joint activity volume across all partners</p>
+        <svg viewBox="0 0 100 50" class="w-full flex-1" preserveAspectRatio="none">
+          <path d="M0,40 Q20,38 35,30 T65,22 T100,10" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between">
+          <span class="text-xs text-gray-500">Steady momentum across Q1–Q2</span>
+          <span class="badge-green"><span class="material-symbols-outlined" style="font-size:12px;">arrow_upward</span>+9% QoQ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- 4. ECOSYSTEM CONTRIBUTION                                      -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div id="panel-contribution" class="tab-panel">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div class="kpi-card"><span class="text-xs text-gray-400">Referrals Influenced</span><span class="font-display text-xl font-bold text-gray-900">1,240</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">SME Enablement</span><span class="font-display text-xl font-bold text-gray-900">3,890</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Developer Participation</span><span class="font-display text-xl font-bold text-gray-900">612</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Educational Outreach</span><span class="font-display text-xl font-bold text-gray-900">45</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Digital Adoption Influence</span><span class="font-display text-xl font-bold text-gray-900">72</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Sector Engagement</span><span class="font-display text-xl font-bold text-gray-900">9 <span class="text-xs text-gray-400 font-medium">sectors</span></span></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Ecosystem Contribution Trend</h2>
+        <p class="text-xs text-gray-400 mb-4">Combined contribution index, monthly</p>
+        <svg viewBox="0 0 100 50" class="w-full" preserveAspectRatio="none" style="height:140px;">
+          <path d="M0,42 Q20,38 38,32 T68,20 T100,8" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="flex justify-between text-gray-400 mt-1 px-1" style="font-size:10px;"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Sector Contribution Chart</h2>
+        <p class="text-xs text-gray-400 mb-4">Partner-driven contribution by sector</p>
+        <div class="flex flex-col gap-3.5">
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Retail &amp; E-commerce</span><span class="text-xs font-semibold text-gray-500">High</span></div><div class="bar-track"><div class="bar-fill-green" style="width:88%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Agriculture</span><span class="text-xs font-semibold text-gray-500">High</span></div><div class="bar-track"><div class="bar-fill-green" style="width:74%; opacity:.85"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Education</span><span class="text-xs font-semibold text-gray-500">Medium</span></div><div class="bar-track"><div class="bar-fill-green" style="width:58%; opacity:.7"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Financial Services</span><span class="text-xs font-semibold text-gray-500">Medium</span></div><div class="bar-track"><div class="bar-fill-green" style="width:46%; opacity:.6"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-5">
+          <div>
+            <h2 class="font-display text-base font-bold text-gray-900">Regional Contribution Analysis</h2>
+            <p class="text-xs text-gray-400 mt-0.5">Where partner-driven contribution is concentrated</p>
+          </div>
+        </div>
+        <div class="w-full h-40 flex gap-1.5">
+          <div class="flex flex-col gap-1.5 w-1/3">
+            <div class="treemap-cell flex-grow-[2]" style="background:#15803D; min-height:0;">Nairobi</div>
+            <div class="treemap-cell flex-grow-[1]" style="background:#16A34A; min-height:0;">Mombasa</div>
+          </div>
+          <div class="flex flex-col gap-1.5 w-1/4">
+            <div class="treemap-cell flex-grow-[1]" style="background:#22C55E; min-height:0;">Kiambu</div>
+            <div class="flex gap-1.5 flex-grow-[1]" style="min-height:0;">
+              <div class="treemap-cell w-1/2" style="background:#4ADE80;">Nakuru</div>
+              <div class="treemap-cell w-1/2" style="background:#86EFAC; color:#14532D;">Kisumu</div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-1.5 flex-1">
+            <div class="treemap-cell flex-grow-[1]" style="background:#BBF7D0; color:#14532D; min-height:0;">Uasin Gishu</div>
+            <div class="treemap-cell flex-grow-[1] border border-gray-200" style="background:#F0FDF4; color:#15803D; min-height:0;">41 other counties</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-4">Partner Influence Indicators</h2>
+        <div class="flex flex-col gap-4">
+          <div class="flex items-center justify-between">
+            <span class="text-sm text-gray-800">High influence</span>
+            <span class="badge-green">3 partners</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill-green" style="width:80%"></div></div>
+          <div class="flex items-center justify-between mt-1">
+            <span class="text-sm text-gray-800">Medium influence</span>
+            <span class="badge-blue">8 partners</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill-blue" style="width:55%"></div></div>
+          <div class="flex items-center justify-between mt-1">
+            <span class="text-sm text-gray-800">Emerging influence</span>
+            <span class="badge-gray">12 partners</span>
+          </div>
+          <div class="bar-track"><div class="bar-fill-gray" style="width:32%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- 5. COMMUNITY IMPACT                                            -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div id="panel-community" class="tab-panel">
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+      <div class="kpi-card"><span class="text-xs text-gray-400">SMEs Reached</span><span class="font-display text-lg font-bold text-gray-900">18,420</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Students Trained</span><span class="font-display text-lg font-bold text-gray-900">6,150</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Developers Onboarded</span><span class="font-display text-lg font-bold text-gray-900">980</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Counties Engaged</span><span class="font-display text-lg font-bold text-gray-900">32<span class="text-xs text-gray-400">/47</span></span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Communities Supported</span><span class="font-display text-lg font-bold text-gray-900">210</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Organizations Enabled</span><span class="font-display text-lg font-bold text-gray-900">140</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Public Participation</span><span class="font-display text-lg font-bold text-gray-900">54K</span></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Community Impact Dashboard</h2>
+        <p class="text-xs text-gray-400 mb-4">Total beneficiaries reached this quarter</p>
+        <div class="font-display text-3xl font-bold text-gray-900 mb-4">26,500</div>
+        <div class="flex flex-col gap-3">
+          <div><div class="flex justify-between mb-1"><span class="text-xs text-gray-700">SMEs</span><span class="text-xs text-gray-500">18,420</span></div><div class="bar-track"><div class="bar-fill-green" style="width:70%"></div></div></div>
+          <div><div class="flex justify-between mb-1"><span class="text-xs text-gray-700">Students</span><span class="text-xs text-gray-500">6,150</span></div><div class="bar-track"><div class="bar-fill-green" style="width:23%; opacity:.8"></div></div></div>
+          <div><div class="flex justify-between mb-1"><span class="text-xs text-gray-700">Developers</span><span class="text-xs text-gray-500">980</span></div><div class="bar-track"><div class="bar-fill-green" style="width:4%; opacity:.6"></div></div></div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Beneficiary Distribution</h2>
+        <p class="text-xs text-gray-400 mb-4">Share of total beneficiaries by category</p>
+        <div class="flex items-center gap-8">
+          <div class="relative w-28 h-28 flex-shrink-0">
+            <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#16A34A" stroke-width="14" stroke-dasharray="167 238.9"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#4ADE80" stroke-width="14" stroke-dasharray="55.7 238.9" stroke-dashoffset="-167"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#D1D5DB" stroke-width="14" stroke-dasharray="16.2 238.9" stroke-dashoffset="-222.7"/>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span class="font-display text-base font-bold text-gray-900">26.5K</span>
+              <span class="text-[9px] font-semibold uppercase tracking-widest text-gray-400">Total</span>
+            </div>
+          </div>
+          <div class="flex-1 space-y-2.5">
+            <div class="flex justify-between text-xs"><span class="flex items-center gap-1.5 text-gray-700"><span class="w-2.5 h-2.5 rounded bg-green-600 inline-block"></span>SMEs</span><span class="font-semibold text-gray-500">70%</span></div>
+            <div class="flex justify-between text-xs"><span class="flex items-center gap-1.5 text-gray-700"><span class="w-2.5 h-2.5 rounded bg-green-300 inline-block"></span>Students</span><span class="font-semibold text-gray-500">23%</span></div>
+            <div class="flex justify-between text-xs"><span class="flex items-center gap-1.5 text-gray-700"><span class="w-2.5 h-2.5 rounded bg-gray-300 inline-block"></span>Developers &amp; orgs</span><span class="font-semibold text-gray-500">7%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-5">
+          <div>
+            <h2 class="font-display text-base font-bold text-gray-900">Regional Outreach Map</h2>
+            <p class="text-xs text-gray-400 mt-0.5">Darker shading = deeper community engagement</p>
+          </div>
+        </div>
+        <div class="w-full h-40 flex gap-1.5">
+          <div class="flex flex-col gap-1.5 w-1/3">
+            <div class="treemap-cell flex-grow-[2]" style="background:#15803D; min-height:0;">Nairobi</div>
+            <div class="treemap-cell flex-grow-[1]" style="background:#16A34A; min-height:0;">Kisumu</div>
+          </div>
+          <div class="flex flex-col gap-1.5 w-1/4">
+            <div class="treemap-cell flex-grow-[1]" style="background:#22C55E; min-height:0;">Mombasa</div>
+            <div class="flex gap-1.5 flex-grow-[1]" style="min-height:0;">
+              <div class="treemap-cell w-1/2" style="background:#4ADE80;">Nakuru</div>
+              <div class="treemap-cell w-1/2" style="background:#86EFAC; color:#14532D;">Kakamega</div>
+            </div>
+          </div>
+          <div class="flex flex-col gap-1.5 flex-1">
+            <div class="treemap-cell flex-grow-[1]" style="background:#BBF7D0; color:#14532D; min-height:0;">Turkana</div>
+            <div class="treemap-cell flex-grow-[1] border border-gray-200" style="background:#F0FDF4; color:#15803D; min-height:0;">26 other counties</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm flex flex-col">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Growth Impact Tracking</h2>
+        <p class="text-xs text-gray-400 mb-4">Cumulative beneficiaries reached, monthly</p>
+        <svg viewBox="0 0 100 50" class="w-full flex-1" preserveAspectRatio="none">
+          <path d="M0,46 Q20,42 38,34 T68,18 T100,4" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="flex justify-between text-gray-400 mt-1 px-1" style="font-size:10px;"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- 6. DIGITAL ENABLEMENT                                          -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div id="panel-enablement" class="tab-panel">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div class="kpi-card"><span class="text-xs text-gray-400">API Integrations</span><span class="font-display text-xl font-bold text-gray-900">47</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Technical Workshops</span><span class="font-display text-xl font-bold text-gray-900">62</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Dev Accounts Enabled</span><span class="font-display text-xl font-bold text-gray-900">1,340</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Platform Integrations</span><span class="font-display text-xl font-bold text-gray-900">19</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">DNS Ecosystem Partners</span><span class="font-display text-xl font-bold text-gray-900">28</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Adoption Initiatives</span><span class="font-display text-xl font-bold text-gray-900">15</span></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Integration Activity Trend</h2>
+        <p class="text-xs text-gray-400 mb-4">Cumulative API &amp; platform integrations</p>
+        <svg viewBox="0 0 100 50" class="w-full" preserveAspectRatio="none" style="height:140px;">
+          <path d="M0,44 Q20,40 38,33 T68,22 T100,9" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="flex justify-between text-gray-400 mt-1 px-1" style="font-size:10px;"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Developer Ecosystem Growth</h2>
+        <p class="text-xs text-gray-400 mb-4">New developer accounts enabled, monthly</p>
+        <div class="flex items-end gap-3 px-1" style="height:120px;">
+          <div class="flex-1 bg-green-200 rounded-t" style="height:30%"></div>
+          <div class="flex-1 bg-green-300 rounded-t" style="height:42%"></div>
+          <div class="flex-1 bg-green-400 rounded-t" style="height:58%"></div>
+          <div class="flex-1 bg-green-500 rounded-t" style="height:64%"></div>
+          <div class="flex-1 bg-green-600 rounded-t" style="height:85%"></div>
+          <div class="flex-1 bg-green-700 rounded-t" style="height:100%"></div>
+        </div>
+        <div class="flex justify-between text-gray-400 mt-1 px-1" style="font-size:10px;"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-4">Technical Enablement Indicators</h2>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="flex flex-col gap-1"><span class="text-xs text-gray-400">API uptime</span><span class="font-display text-lg font-bold text-gray-900">99.8%</span><span class="badge-green w-fit">Healthy</span></div>
+          <div class="flex flex-col gap-1"><span class="text-xs text-gray-400">Integration success rate</span><span class="font-display text-lg font-bold text-gray-900">94%</span><span class="badge-green w-fit">Healthy</span></div>
+          <div class="flex flex-col gap-1"><span class="text-xs text-gray-400">Avg. integration time</span><span class="font-display text-lg font-bold text-gray-900">6 days</span><span class="badge-amber w-fit">Monitor</span></div>
+          <div class="flex flex-col gap-1"><span class="text-xs text-gray-400">Sandbox usage</span><span class="font-display text-lg font-bold text-gray-900">340 devs</span><span class="badge-green w-fit">Growing</span></div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Adoption Progression</h2>
+        <p class="text-xs text-gray-400 mb-4">Partner integrations by adoption stage</p>
+        <div class="flex flex-col gap-3.5">
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Pilot</span><span class="text-xs font-semibold text-gray-500">12</span></div><div class="bar-track"><div class="bar-fill-gray" style="width:26%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Integrated</span><span class="text-xs font-semibold text-gray-500">19</span></div><div class="bar-track"><div class="bar-fill-blue" style="width:41%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Scaled</span><span class="text-xs font-semibold text-gray-500">9</span></div><div class="bar-track"><div class="bar-fill-amber" style="width:19%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Optimized</span><span class="text-xs font-semibold text-gray-500">7</span></div><div class="bar-track"><div class="bar-fill-green" style="width:15%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- 7. ECOSYSTEM ADVOCACY                                          -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div id="panel-advocacy" class="tab-panel">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div class="kpi-card"><span class="text-xs text-gray-400">Campaign Participation</span><span class="font-display text-xl font-bold text-gray-900">28</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Co-Published Content</span><span class="font-display text-xl font-bold text-gray-900">34</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Speaking Engagements</span><span class="font-display text-xl font-bold text-gray-900">52</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Webinar Hosting</span><span class="font-display text-xl font-bold text-gray-900">19</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Awareness Activities</span><span class="font-display text-xl font-bold text-gray-900">76</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Advocacy Initiatives</span><span class="font-display text-xl font-bold text-gray-900">22</span></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Advocacy Activity Trend</h2>
+        <p class="text-xs text-gray-400 mb-4">Public-facing advocacy activities, monthly</p>
+        <svg viewBox="0 0 100 50" class="w-full" preserveAspectRatio="none" style="height:140px;">
+          <path d="M0,40 Q18,36 34,30 T62,24 T100,10" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="flex justify-between text-gray-400 mt-1 px-1" style="font-size:10px;"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Content Performance</h2>
+        <p class="text-xs text-gray-400 mb-4">Top co-published content by views</p>
+        <div class="flex flex-col gap-3.5">
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">"Why .ke Matters"</span><span class="text-xs font-semibold text-gray-500">22k</span></div><div class="bar-track"><div class="bar-fill-green" style="width:100%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">"Securing Your Domain"</span><span class="text-xs font-semibold text-gray-500">18k</span></div><div class="bar-track"><div class="bar-fill-green" style="width:82%; opacity:.85"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">"SME Digital Toolkit"</span><span class="text-xs font-semibold text-gray-500">15k</span></div><div class="bar-track"><div class="bar-fill-green" style="width:68%; opacity:.7"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">"DNS 101 Webinar Recap"</span><span class="text-xs font-semibold text-gray-500">11k</span></div><div class="bar-track"><div class="bar-fill-green" style="width:50%; opacity:.6"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Engagement Analytics</h2>
+        <p class="text-xs text-gray-400 mb-4">Advocacy engagement by channel</p>
+        <div class="flex items-center gap-8">
+          <div class="relative w-28 h-28 flex-shrink-0">
+            <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#16A34A" stroke-width="14" stroke-dasharray="107.5 238.9"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#4ADE80" stroke-width="14" stroke-dasharray="66.9 238.9" stroke-dashoffset="-107.5"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#2563EB" stroke-width="14" stroke-dasharray="40.6 238.9" stroke-dashoffset="-174.4"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#D1D5DB" stroke-width="14" stroke-dasharray="23.9 238.9" stroke-dashoffset="-215"/>
+            </svg>
+            <div class="absolute inset-0 flex flex-col items-center justify-center">
+              <span class="font-display text-base font-bold text-gray-900">76</span>
+              <span class="text-[9px] font-semibold uppercase tracking-widest text-gray-400">Activities</span>
+            </div>
+          </div>
+          <div class="flex-1 space-y-2.5">
+            <div class="flex justify-between text-xs"><span class="flex items-center gap-1.5 text-gray-700"><span class="w-2.5 h-2.5 rounded bg-green-600 inline-block"></span>Social</span><span class="font-semibold text-gray-500">45%</span></div>
+            <div class="flex justify-between text-xs"><span class="flex items-center gap-1.5 text-gray-700"><span class="w-2.5 h-2.5 rounded bg-green-300 inline-block"></span>Web</span><span class="font-semibold text-gray-500">28%</span></div>
+            <div class="flex justify-between text-xs"><span class="flex items-center gap-1.5 text-gray-700"><span class="w-2.5 h-2.5 rounded bg-blue-600 inline-block"></span>Press</span><span class="font-semibold text-gray-500">17%</span></div>
+            <div class="flex justify-between text-xs"><span class="flex items-center gap-1.5 text-gray-700"><span class="w-2.5 h-2.5 rounded bg-gray-300 inline-block"></span>Events</span><span class="font-semibold text-gray-500">10%</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-4">Campaign Participation Summary</h2>
+        <div class="flex flex-col gap-3.5">
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Digital SME Week</span><span class="text-xs font-semibold text-gray-500">88%</span></div><div class="bar-track"><div class="bar-fill-green" style="width:88%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">DNS Security Month</span><span class="text-xs font-semibold text-gray-500">74%</span></div><div class="bar-track"><div class="bar-fill-green" style="width:74%; opacity:.85"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Schools Connectivity Drive</span><span class="text-xs font-semibold text-gray-500">65%</span></div><div class="bar-track"><div class="bar-fill-amber" style="width:65%"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- 8. INNOVATION CONTRIBUTION                                     -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div id="panel-innovation" class="tab-panel">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div class="kpi-card"><span class="text-xs text-gray-400">Innovation Pilots</span><span class="font-display text-xl font-bold text-gray-900">14</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Research Collaborations</span><span class="font-display text-xl font-bold text-gray-900">9</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Ecosystem Projects</span><span class="font-display text-xl font-bold text-gray-900">23</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Strategic Initiatives</span><span class="font-display text-xl font-bold text-gray-900">11</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Transformation Activities</span><span class="font-display text-xl font-bold text-gray-900">31</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Tooling Contributions</span><span class="font-display text-xl font-bold text-gray-900">17</span></div>
+    </div>
+
+    <div class="bg-white rounded-xl p-6 shadow-sm">
+      <h2 class="font-display text-base font-bold text-gray-900 mb-1">Innovation Pipeline</h2>
+      <p class="text-xs text-gray-400 mb-4">Partner-driven pilots by stage</p>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div class="kanban-col">
+          <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Ideation · 6</span>
+          <div class="kanban-card">DNS analytics sandbox</div>
+          <div class="kanban-card">SME credit-scoring API</div>
+        </div>
+        <div class="kanban-col">
+          <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Pilot · 5</span>
+          <div class="kanban-card">DNSSEC resolver pilot</div>
+          <div class="kanban-card">Agri-tech onboarding flow</div>
+        </div>
+        <div class="kanban-col">
+          <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Scaling · 3</span>
+          <div class="kanban-card">Open API toolkit</div>
+        </div>
+        <div class="kanban-col">
+          <span class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Adopted · 4</span>
+          <div class="kanban-card">SME onboarding sandbox</div>
+          <div class="kanban-card">Registrar capacity suite</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center text-green-700"><span class="material-symbols-outlined" style="font-size:18px;">verified</span></div>
+        <h3 class="font-display font-bold text-gray-900 text-sm leading-snug">DNSSEC pilot cut resolution errors 31%</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">Joint pilot with three registrar partners now ready to scale ecosystem-wide.</p>
+      </div>
+      <div class="bg-white rounded-xl p-6 shadow-sm flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center text-blue-600"><span class="material-symbols-outlined" style="font-size:18px;">bolt</span></div>
+        <h3 class="font-display font-bold text-gray-900 text-sm leading-snug">SME sandbox lowered onboarding time 40%</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">Self-serve sandbox developed with university partners is now in scaling phase.</p>
+      </div>
+      <div class="bg-white rounded-xl p-6 shadow-sm flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-full bg-amber-50 flex items-center justify-center text-amber-600"><span class="material-symbols-outlined" style="font-size:18px;">extension</span></div>
+        <h3 class="font-display font-bold text-gray-900 text-sm leading-snug">Open API toolkit adopted by 12 partners</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">Tooling contribution from technology partners now powers a third of integrations.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-4">Pilot Participation</h2>
+        <div class="flex flex-col gap-3.5">
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">DNSSEC resolver pilot</span><span class="text-xs font-semibold text-gray-500">9 partners</span></div><div class="bar-track"><div class="bar-fill-green" style="width:90%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Open API toolkit</span><span class="text-xs font-semibold text-gray-500">12 partners</span></div><div class="bar-track"><div class="bar-fill-green" style="width:100%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Agri-tech onboarding flow</span><span class="text-xs font-semibold text-gray-500">5 partners</span></div><div class="bar-track"><div class="bar-fill-amber" style="width:42%"></div></div></div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-4">Strategic Innovation Indicators</h2>
+        <div class="grid grid-cols-1 gap-3">
+          <div class="flex items-center justify-between"><span class="text-sm text-gray-700">Research intensity</span><span class="badge-green">High</span></div>
+          <div class="flex items-center justify-between"><span class="text-sm text-gray-700">Tooling adoption</span><span class="badge-blue">Medium</span></div>
+          <div class="flex items-center justify-between"><span class="text-sm text-gray-700">Transformation velocity</span><span class="badge-green">High</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- 9. OPPORTUNITY INTELLIGENCE                                    -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div id="panel-opportunity" class="tab-panel">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div class="kpi-card"><span class="text-xs text-gray-400">Available Opportunities</span><span class="font-display text-xl font-bold text-gray-900">38</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Pending Opportunities</span><span class="font-display text-xl font-bold text-gray-900">16</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Strategic Initiatives Avail.</span><span class="font-display text-xl font-bold text-gray-900">12</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Engagement Rate</span><span class="font-display text-xl font-bold text-gray-900">64%</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Response Rate</span><span class="font-display text-xl font-bold text-gray-900">71%</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">New Recommendations</span><span class="font-display text-xl font-bold text-gray-900">9</span></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-4">Opportunity Pipeline</h2>
+        <div class="flex flex-col gap-2">
+          <div class="funnel-bar" style="background:#16A34A; width:100%;"><span>Identified</span><span>120</span></div>
+          <div class="funnel-bar" style="background:#22C55E; width:82%;"><span>Shared</span><span>84</span></div>
+          <div class="funnel-bar" style="background:#4ADE80; width:58%; color:#14532D;"><span>Engaged</span><span>52</span></div>
+          <div class="funnel-bar" style="background:#86EFAC; width:38%; color:#14532D;"><span>Committed</span><span>31</span></div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-4">Sector Opportunity Dashboard</h2>
+        <p class="text-xs text-gray-400 mb-4 -mt-3">Open collaboration opportunities by sector</p>
+        <div class="flex flex-col gap-3.5">
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Retail &amp; E-commerce</span><span class="text-xs font-semibold text-gray-500">14</span></div><div class="bar-track"><div class="bar-fill-green" style="width:100%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Agriculture</span><span class="text-xs font-semibold text-gray-500">9</span></div><div class="bar-track"><div class="bar-fill-green" style="width:64%; opacity:.85"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Financial Services</span><span class="text-xs font-semibold text-gray-500">7</span></div><div class="bar-track"><div class="bar-fill-green" style="width:50%; opacity:.7"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Manufacturing</span><span class="text-xs font-semibold text-gray-500">5</span></div><div class="bar-track"><div class="bar-fill-amber" style="width:36%"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strategic Recommendation Panels -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center text-green-700"><span class="material-symbols-outlined" style="font-size:18px;">trending_up</span></div>
+        <h3 class="font-display font-bold text-gray-900 text-sm leading-snug">Fintech ready for deeper collaboration</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">Engagement velocity among fintech partners is up 24% MoM. Recommend a targeted co-campaign.</p>
         <a href="#" class="text-xs font-semibold text-green-700 hover:underline mt-auto">Explore →</a>
       </div>
-
       <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex flex-col gap-3">
-        <div class="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
-          <span class="material-symbols-outlined" style="font-size:18px;">location_on</span>
-        </div>
-        <h3 class="font-display font-bold text-gray-900 text-sm leading-snug">Mombasa is underserved</h3>
-        <p class="text-xs text-gray-500 leading-relaxed">High SME density but lowest .ke adoption per capita outside Nairobi. Prime outreach region.</p>
+        <div class="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center text-blue-600"><span class="material-symbols-outlined" style="font-size:18px;">location_on</span></div>
+        <h3 class="font-display font-bold text-gray-900 text-sm leading-snug">Mombasa partners underrepresented</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">High partner density but lowest engagement rate outside Nairobi. Prime outreach opportunity.</p>
         <a href="#" class="text-xs font-semibold text-green-700 hover:underline mt-auto">View region →</a>
       </div>
-
-      <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-red-500 flex flex-col gap-3">
-        <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center text-red-600">
-          <span class="material-symbols-outlined" style="font-size:18px;">warning</span>
-        </div>
-        <h3 class="font-display font-bold text-gray-900 text-sm leading-snug">43 domains at risk</h3>
-        <p class="text-xs text-gray-500 leading-relaxed">High-value corporate domains expiring in &lt;15 days with no auto-renew configured.</p>
-        <a href="#" class="text-xs font-semibold text-red-600 hover:underline mt-auto">Action required →</a>
+      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 flex flex-col gap-3">
+        <div class="w-9 h-9 rounded-full bg-amber-50 flex items-center justify-center text-amber-600"><span class="material-symbols-outlined" style="font-size:18px;">school</span></div>
+        <h3 class="font-display font-bold text-gray-900 text-sm leading-snug">Universities show rising pilot appetite</h3>
+        <p class="text-xs text-gray-500 leading-relaxed">Three universities have requested pilot access this quarter — recommend a joint innovation track.</p>
+        <a href="#" class="text-xs font-semibold text-green-700 hover:underline mt-auto">Recommend →</a>
       </div>
+    </div>
 
+    <!-- Opportunity Engagement Tracking -->
+    <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-amber-500">
+      <div class="flex items-center justify-between mb-5">
+        <div>
+          <h2 class="font-display text-base font-bold text-gray-900">Opportunities Closing Soon</h2>
+          <p class="text-xs text-gray-400 mt-0.5">Pending partner response · awaiting engagement</p>
+        </div>
+        <span class="badge-amber"><span class="material-symbols-outlined" style="font-size:12px;">schedule</span>16 pending</span>
+      </div>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between py-2.5 border-b border-gray-100">
+          <div>
+            <p class="text-sm font-semibold text-gray-800">Equity Group Foundation</p>
+            <p class="text-xs text-gray-400">CSR co-funding opportunity · High value</p>
+          </div>
+          <span class="badge-red">3 days</span>
+        </div>
+        <div class="flex items-center justify-between py-2.5 border-b border-gray-100">
+          <div>
+            <p class="text-sm font-semibold text-gray-800">Nairobi Tech Week</p>
+            <p class="text-xs text-gray-400">Sponsorship slot · Medium value</p>
+          </div>
+          <span class="badge-amber">8 days</span>
+        </div>
+        <div class="flex items-center justify-between py-2.5 border-b border-gray-100">
+          <div>
+            <p class="text-sm font-semibold text-gray-800">Kenya Manufacturers Association</p>
+            <p class="text-xs text-gray-400">Sector pilot invitation · High value</p>
+          </div>
+          <span class="badge-amber">12 days</span>
+        </div>
+        <div class="flex items-center justify-between py-2.5">
+          <p class="text-sm text-gray-500">+ 13 more opportunities pending response</p>
+          <button class="text-xs font-semibold text-amber-600 hover:text-amber-800 underline">View all →</button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- ── Row 2: Sector Opportunity + TLD Trends ── -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <!-- 10. MARKET INTELLIGENCE                                        -->
+  <!-- ══════════════════════════════════════════════════════════════ -->
+  <div id="panel-market" class="tab-panel">
 
-    <!-- Sector Opportunity by Gap -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+      <div class="kpi-card"><span class="text-xs text-gray-400">.ke Market Penetration</span><span class="font-display text-xl font-bold text-gray-900">6.8%</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Avg. Sector Growth</span><span class="font-display text-xl font-bold text-gray-900">+11.4%</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Regional Adoption Index</span><span class="font-display text-xl font-bold text-gray-900">42<span class="text-xs text-gray-400">/100</span></span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Ecosystem Growth Ind.</span><span class="font-display text-xl font-bold text-gray-900">+12%</span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Opportunity Signals</span><span class="font-display text-xl font-bold text-gray-900">6 <span class="text-xs text-gray-400 font-medium">active</span></span></div>
+      <div class="kpi-card"><span class="text-xs text-gray-400">Digital Participation</span><span class="font-display text-xl font-bold text-gray-900">+9%<span class="text-xs text-gray-400"> YoY</span></span></div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-xl p-6 shadow-sm">
+        <h2 class="font-display text-base font-bold text-gray-900 mb-1">Sector Growth Trends</h2>
+        <p class="text-xs text-gray-400 mb-4">Year-over-year growth by sector</p>
+        <div class="flex flex-col gap-3.5">
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Fintech</span><span class="text-xs font-semibold text-gray-500">+24%</span></div><div class="bar-track"><div class="bar-fill-green" style="width:100%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Retail</span><span class="text-xs font-semibold text-gray-500">+15%</span></div><div class="bar-track"><div class="bar-fill-green" style="width:62%; opacity:.85"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Agritech</span><span class="text-xs font-semibold text-gray-500">+12%</span></div><div class="bar-track"><div class="bar-fill-green" style="width:50%; opacity:.7"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Logistics</span><span class="text-xs font-semibold text-gray-500">+9%</span></div><div class="bar-track"><div class="bar-fill-amber" style="width:38%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Manufacturing</span><span class="text-xs font-semibold text-gray-500">+7%</span></div><div class="bar-track"><div class="bar-fill-amber" style="width:29%"></div></div></div>
+          <div><div class="flex justify-between mb-1.5"><span class="text-sm text-gray-800">Professional Services</span><span class="text-xs font-semibold text-gray-500">+5%</span></div><div class="bar-track"><div class="bar-fill-gray" style="width:21%"></div></div></div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl p-6 shadow-sm flex flex-col">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 class="font-display text-base font-bold text-gray-900">Ecosystem Growth Trends</h2>
+            <p class="text-xs text-gray-400 mt-0.5">.ke namespace vs. competitor TLDs, YTD</p>
+          </div>
+          <div class="flex gap-3 flex-shrink-0">
+            <span class="flex items-center gap-1.5 text-xs text-gray-500"><span class="w-2.5 h-2.5 rounded-full bg-green-600 inline-block"></span>.ke</span>
+            <span class="flex items-center gap-1.5 text-xs text-gray-500"><span class="w-2.5 h-2.5 rounded-full bg-gray-400 inline-block"></span>.com</span>
+            <span class="flex items-center gap-1.5 text-xs text-gray-500"><span class="w-2.5 h-2.5 rounded-full bg-gray-200 inline-block"></span>.africa</span>
+          </div>
+        </div>
+        <div class="flex-1 relative border-l border-b border-gray-200 mx-2 mt-2" style="min-height:160px;">
+          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <line x1="0" y1="33" x2="100" y2="33" stroke="#F3F4F6" stroke-width="0.8"/>
+            <line x1="0" y1="66" x2="100" y2="66" stroke="#F3F4F6" stroke-width="0.8"/>
+            <path d="M0,80 Q30,75 50,85 T90,70 T100,65" fill="none" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <path d="M0,40 Q20,35 40,45 T80,30 T100,22" fill="none" stroke="#9CA3AF" stroke-width="2"/>
+            <path d="M0,70 Q25,60 45,50 T75,35 T100,15" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="100" cy="15" r="2.5" fill="#16A34A"/>
+          </svg>
+        </div>
+        <div class="flex justify-between text-gray-400 mt-2 mx-2 px-1" style="font-size:10px;"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+        <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
+          <p class="text-xs text-gray-500">.ke outpacing .com registrations since <strong>March 2026</strong></p>
+          <span class="badge-green"><span class="material-symbols-outlined" style="font-size:12px;">arrow_upward</span>+12% vs .com</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Regional Opportunity Heatmap -->
     <div class="bg-white rounded-xl p-6 shadow-sm">
       <div class="flex items-center justify-between mb-5">
         <div>
-          <h2 class="font-display text-base font-bold text-gray-900">Sector Opportunity by Gap</h2>
-          <p class="text-xs text-gray-400 mt-0.5">SMEs without .ke domains, by industry</p>
+          <h2 class="font-display text-base font-bold text-gray-900">Regional Opportunity Heatmap</h2>
+          <p class="text-xs text-gray-400 mt-0.5">Darker shading = larger gap between registered businesses and .ke domains</p>
         </div>
-        <button class="text-xs font-semibold text-green-700 hover:underline">All sectors →</button>
+        <select class="border border-gray-200 rounded-lg text-xs font-medium py-1.5 px-3 bg-white text-gray-700 focus:outline-none focus:border-green-500">
+          <option>By County</option>
+          <option>By Region</option>
+        </select>
       </div>
-      <div class="flex flex-col gap-4">
-        <div>
-          <div class="flex justify-between mb-1.5">
-            <span class="text-sm font-medium text-gray-800">Retail &amp; E-commerce</span>
-            <span class="text-xs font-semibold text-gray-500">450k</span>
+
+      <div class="w-full h-48 flex gap-1.5">
+        <div class="flex flex-col gap-1.5 w-1/3">
+          <div class="treemap-cell flex-grow-[2] relative group" style="background:#B91C1C; min-height:0;">
+            Nairobi
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity rounded">
+              <span class="text-xs font-bold">Gap: 450k</span>
+              <span style="font-size:10px;">Adoption: 15%</span>
+            </div>
           </div>
-          <div class="bar-track"><div class="bar-fill-green" style="width:85%"></div></div>
+          <div class="treemap-cell flex-grow-[1] rounded" style="background:#DC2626; min-height:0;">Mombasa</div>
         </div>
-        <div>
-          <div class="flex justify-between mb-1.5">
-            <span class="text-sm font-medium text-gray-800">Agriculture</span>
-            <span class="text-xs font-semibold text-gray-500">320k</span>
+        <div class="flex flex-col gap-1.5 w-1/4">
+          <div class="treemap-cell flex-grow-[1]" style="background:#EF4444; min-height:0;">Kiambu</div>
+          <div class="flex gap-1.5 flex-grow-[1]" style="min-height:0;">
+            <div class="treemap-cell w-1/2" style="background:#F87171;">Nakuru</div>
+            <div class="treemap-cell w-1/2" style="background:#FCA5A5; color:#7f1d1d;">Machakos</div>
           </div>
-          <div class="bar-track"><div class="bar-fill-green" style="width:65%; opacity:.85"></div></div>
         </div>
-        <div>
-          <div class="flex justify-between mb-1.5">
-            <span class="text-sm font-medium text-gray-800">Manufacturing</span>
-            <span class="text-xs font-semibold text-gray-500">280k</span>
+        <div class="flex flex-col gap-1.5 flex-1">
+          <div class="flex gap-1.5 flex-grow-[1]" style="min-height:0;">
+            <div class="treemap-cell w-1/3" style="background:#FECACA; color:#991b1b;">Kisumu</div>
+            <div class="treemap-cell w-2/3" style="background:#FEE2E2; color:#991b1b;">Uasin Gishu</div>
           </div>
-          <div class="bar-track"><div class="bar-fill-green" style="width:55%; opacity:.75"></div></div>
+          <div class="flex gap-1.5 flex-grow-[1]" style="min-height:0;">
+            <div class="treemap-cell w-1/2 border border-gray-200" style="background:#FFF1F2; color:#9ca3af;">Kajiado</div>
+            <div class="treemap-cell w-1/2 border border-gray-200" style="background:#FFF1F2; color:#9ca3af;">Kilifi</div>
+          </div>
+          <div class="treemap-cell flex-grow-[1] border border-gray-200" style="background:#F9FAFB; color:#9ca3af; min-height:0;">38 other counties</div>
         </div>
-        <div>
-          <div class="flex justify-between mb-1.5">
-            <span class="text-sm font-medium text-gray-800">Logistics &amp; Transport</span>
-            <span class="text-xs font-semibold text-gray-500">190k</span>
-          </div>
-          <div class="bar-track"><div class="bar-fill-green" style="width:40%; opacity:.65"></div></div>
+      </div>
+
+      <div class="flex items-center gap-3 mt-4 pt-4 border-t border-gray-100">
+        <span class="text-xs text-gray-400">Gap intensity:</span>
+        <div class="flex items-center gap-1">
+          <div class="w-4 h-3 rounded" style="background:#B91C1C;"></div>
+          <div class="w-4 h-3 rounded" style="background:#EF4444;"></div>
+          <div class="w-4 h-3 rounded" style="background:#FCA5A5;"></div>
+          <div class="w-4 h-3 rounded" style="background:#FEE2E2;"></div>
+          <div class="w-4 h-3 rounded border border-gray-200" style="background:#F9FAFB;"></div>
         </div>
-        <div>
-          <div class="flex justify-between mb-1.5">
-            <span class="text-sm font-medium text-gray-800">Professional Services</span>
-            <span class="text-xs font-semibold text-gray-500">150k</span>
-          </div>
-          <div class="bar-track"><div class="bar-fill-green" style="width:30%; opacity:.55"></div></div>
-        </div>
-        <div>
-          <div class="flex justify-between mb-1.5">
-            <span class="text-sm font-medium text-gray-800">Financial Services</span>
-            <span class="text-xs font-semibold text-gray-500">98k</span>
-          </div>
-          <div class="bar-track"><div class="bar-fill-amber" style="width:22%"></div></div>
+        <span class="text-xs text-gray-400">Critical → Low opportunity</span>
+        <div class="ml-auto flex gap-4 text-xs text-gray-500">
+          <span><strong class="text-red-600">Nairobi:</strong> 450k gap · 15% adoption</span>
+          <span><strong class="text-red-500">Mombasa:</strong> 180k gap · 11% adoption</span>
         </div>
       </div>
     </div>
 
-    <!-- Competitor TLD Trends -->
-    <div class="bg-white rounded-xl p-6 shadow-sm flex flex-col">
-      <div class="flex items-center justify-between mb-4">
-        <div>
-          <h2 class="font-display text-base font-bold text-gray-900">Competitor TLD Trends</h2>
-          <p class="text-xs text-gray-400 mt-0.5">Year-to-date registration momentum</p>
-        </div>
-        <div class="flex gap-3 flex-shrink-0">
-          <span class="flex items-center gap-1.5 text-xs text-gray-500"><span class="w-2.5 h-2.5 rounded-full bg-green-600 inline-block"></span>.ke</span>
-          <span class="flex items-center gap-1.5 text-xs text-gray-500"><span class="w-2.5 h-2.5 rounded-full bg-gray-400 inline-block"></span>.com</span>
-          <span class="flex items-center gap-1.5 text-xs text-gray-500"><span class="w-2.5 h-2.5 rounded-full bg-gray-200 inline-block"></span>.africa</span>
-        </div>
-      </div>
-      <div class="flex-1 relative border-l border-b border-gray-200 mx-2 mt-2" style="min-height:180px;">
-        <!-- Y axis labels -->
-        <div class="absolute -left-7 top-0 bottom-0 flex flex-col justify-between text-right">
-          <span class="text-[10px] text-gray-400">High</span>
-          <span class="text-[10px] text-gray-400">Mid</span>
-          <span class="text-[10px] text-gray-400">Low</span>
-        </div>
-        <!-- Grid lines -->
-        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-          <line x1="0" y1="33" x2="100" y2="33" stroke="#F3F4F6" stroke-width="0.8"/>
-          <line x1="0" y1="66" x2="100" y2="66" stroke="#F3F4F6" stroke-width="0.8"/>
-          <!-- .africa -->
-          <path d="M0,80 Q30,75 50,85 T90,70 T100,65" fill="none" stroke="#D1D5DB" stroke-width="1.5" stroke-dasharray="3,3"/>
-          <!-- .com -->
-          <path d="M0,40 Q20,35 40,45 T80,30 T100,22" fill="none" stroke="#9CA3AF" stroke-width="2"/>
-          <!-- .ke -->
-          <path d="M0,70 Q25,60 45,50 T75,35 T100,15" fill="none" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
-          <!-- .ke endpoint dot -->
-          <circle cx="100" cy="15" r="2.5" fill="#16A34A"/>
-        </svg>
-      </div>
-      <div class="flex justify-between text-gray-400 mt-2 mx-2 px-1" style="font-size:10px;">
-        <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
-      </div>
-      <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between">
-        <p class="text-xs text-gray-500">.ke outpacing .com registrations since <strong>March 2026</strong></p>
-        <span class="badge-green"><span class="material-symbols-outlined" style="font-size:12px;">arrow_upward</span>+12% vs .com</span>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ── Row 3: Regional Adoption Gap Heat Map ── -->
-  <div class="bg-white rounded-xl p-6 shadow-sm">
-    <div class="flex items-center justify-between mb-5">
-      <div>
-        <h2 class="font-display text-base font-bold text-gray-900">Regional Adoption Gap</h2>
-        <p class="text-xs text-gray-400 mt-0.5">Darker shading = larger gap between registered businesses and .ke domains</p>
-      </div>
-      <select class="border border-gray-200 rounded-lg text-xs font-medium py-1.5 px-3 bg-white text-gray-700 focus:outline-none focus:border-green-500">
-        <option>By County</option>
-        <option>By Region</option>
-      </select>
-    </div>
-
-    <div class="w-full h-48 flex gap-1.5">
-      <!-- Nairobi column -->
-      <div class="flex flex-col gap-1.5 w-1/3">
-        <div class="treemap-cell flex-grow-[2] relative group" style="background:#B91C1C; min-height:0;">
-          Nairobi
-          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center transition-opacity rounded">
-            <span class="text-xs font-bold">Gap: 450k</span>
-            <span style="font-size:10px;">Adoption: 15%</span>
-          </div>
-        </div>
-        <div class="treemap-cell flex-grow-[1] rounded" style="background:#DC2626; min-height:0;">Mombasa</div>
-      </div>
-      <!-- Mid column -->
-      <div class="flex flex-col gap-1.5 w-1/4">
-        <div class="treemap-cell flex-grow-[1]" style="background:#EF4444; min-height:0;">Kiambu</div>
-        <div class="flex gap-1.5 flex-grow-[1]" style="min-height:0;">
-          <div class="treemap-cell w-1/2" style="background:#F87171;">Nakuru</div>
-          <div class="treemap-cell w-1/2" style="background:#FCA5A5; color:#7f1d1d;">Machakos</div>
-        </div>
-      </div>
-      <!-- Remaining counties -->
-      <div class="flex flex-col gap-1.5 flex-1">
-        <div class="flex gap-1.5 flex-grow-[1]" style="min-height:0;">
-          <div class="treemap-cell w-1/3" style="background:#FECACA; color:#991b1b;">Kisumu</div>
-          <div class="treemap-cell w-2/3" style="background:#FEE2E2; color:#991b1b;">Uasin Gishu</div>
-        </div>
-        <div class="flex gap-1.5 flex-grow-[1]" style="min-height:0;">
-          <div class="treemap-cell w-1/2 border border-gray-200" style="background:#FFF1F2; color:#9ca3af;">Kajiado</div>
-          <div class="treemap-cell w-1/2 border border-gray-200" style="background:#FFF1F2; color:#9ca3af;">Kilifi</div>
-        </div>
-        <div class="treemap-cell flex-grow-[1] border border-gray-200" style="background:#F9FAFB; color:#9ca3af; min-height:0;">
-          38 other counties
-        </div>
-      </div>
-    </div>
-
-    <!-- Legend -->
-    <div class="flex items-center gap-3 mt-4 pt-4 border-t border-gray-100">
-      <span class="text-xs text-gray-400">Gap intensity:</span>
-      <div class="flex items-center gap-1">
-        <div class="w-4 h-3 rounded" style="background:#B91C1C;"></div>
-        <div class="w-4 h-3 rounded" style="background:#EF4444;"></div>
-        <div class="w-4 h-3 rounded" style="background:#FCA5A5;"></div>
-        <div class="w-4 h-3 rounded" style="background:#FEE2E2;"></div>
-        <div class="w-4 h-3 rounded border border-gray-200" style="background:#F9FAFB;"></div>
-      </div>
-      <span class="text-xs text-gray-400">Critical → Low opportunity</span>
-      <div class="ml-auto flex gap-4 text-xs text-gray-500">
-        <span><strong class="text-red-600">Nairobi:</strong> 450k gap · 15% adoption</span>
-        <span><strong class="text-red-500">Mombasa:</strong> 180k gap · 11% adoption</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── Row 4: Extension Breakdown + At-Risk Domains ── -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-    <!-- Extension Breakdown (moved from dashboard) -->
+    <!-- Adoption Intelligence Dashboard -->
     <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-green-600">
       <div class="flex items-center justify-between mb-5">
         <div>
-          <h2 class="font-display text-base font-bold text-gray-900">Extension Breakdown</h2>
-          <p class="text-xs text-gray-400 mt-0.5">Distribution across .ke namespace variants</p>
+          <h2 class="font-display text-base font-bold text-gray-900">Adoption Intelligence Dashboard</h2>
+          <p class="text-xs text-gray-400 mt-0.5">Namespace distribution &amp; renewal health</p>
         </div>
-        <span class="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded">3,847 total</span>
+        <span class="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-1 rounded">3,847 active domains</span>
       </div>
-      <div class="flex items-center gap-8">
-        <!-- Mini donut -->
+      <div class="flex items-center gap-8 flex-wrap">
         <div class="relative w-28 h-28 flex-shrink-0">
           <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#16A34A"   stroke-width="14" stroke-dasharray="143.3 238.9"/>
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#4ADE80"   stroke-width="14" stroke-dasharray="47.7 238.9"  stroke-dashoffset="-143.3"/>
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#D1D5DB"   stroke-width="14" stroke-dasharray="23.9 238.9"  stroke-dashoffset="-191"/>
-            <circle cx="50" cy="50" r="38" fill="none" stroke="#F3F4F6"   stroke-width="14" stroke-dasharray="23.9 238.9"  stroke-dashoffset="-214.9"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#16A34A" stroke-width="14" stroke-dasharray="143.3 238.9"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#4ADE80" stroke-width="14" stroke-dasharray="47.7 238.9" stroke-dashoffset="-143.3"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#D1D5DB" stroke-width="14" stroke-dasharray="23.9 238.9" stroke-dashoffset="-191"/>
+            <circle cx="50" cy="50" r="38" fill="none" stroke="#F3F4F6" stroke-width="14" stroke-dasharray="23.9 238.9" stroke-dashoffset="-214.9"/>
           </svg>
           <div class="absolute inset-0 flex flex-col items-center justify-center">
             <span class="font-display text-base font-bold text-gray-900">3,847</span>
             <span class="text-[9px] font-semibold uppercase tracking-widest text-gray-400">Domains</span>
           </div>
         </div>
-        <!-- Legend with bars -->
-        <div class="flex-1 space-y-3">
+        <div class="flex-1 space-y-3 min-w-[220px]">
           <div>
             <div class="flex justify-between mb-1"><span class="text-xs text-gray-700 flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded bg-green-600 inline-block"></span>.co.ke</span><span class="text-xs font-semibold text-gray-500">60% · 2,308</span></div>
             <div class="bar-track"><div class="bar-fill-green" style="width:60%"></div></div>
@@ -356,60 +1020,23 @@
             <div class="bar-track"><div class="bar-fill-gray" style="width:10%; opacity:.5"></div></div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- At-Risk Domains (moved from dashboard) -->
-    <div class="bg-white rounded-xl p-6 shadow-sm border-l-4 border-red-500">
-      <div class="flex items-center justify-between mb-5">
-        <div>
-          <h2 class="font-display text-base font-bold text-gray-900">At-Risk Domains</h2>
-          <p class="text-xs text-gray-400 mt-0.5">Expiring soon · no auto-renew configured</p>
-        </div>
-        <span class="badge-red">
-          <span class="material-symbols-outlined" style="font-size:12px;">warning</span>43 critical
-        </span>
-      </div>
-      <div class="space-y-3">
-        <!-- Domain rows -->
-        <div class="flex items-center justify-between py-2.5 border-b border-gray-100">
-          <div>
-            <p class="text-sm font-semibold text-gray-800">equitybankgroup.co.ke</p>
-            <p class="text-xs text-gray-400">Financial Services · High value</p>
-          </div>
-          <div class="text-right">
-            <span class="badge-red">3 days</span>
-          </div>
-        </div>
-        <div class="flex items-center justify-between py-2.5 border-b border-gray-100">
-          <div>
-            <p class="text-sm font-semibold text-gray-800">nairobitechweek.co.ke</p>
-            <p class="text-xs text-gray-400">Events &amp; Media · Medium value</p>
-          </div>
-          <div class="text-right">
-            <span class="badge-amber">8 days</span>
-          </div>
-        </div>
-        <div class="flex items-center justify-between py-2.5 border-b border-gray-100">
-          <div>
-            <p class="text-sm font-semibold text-gray-800">kenyabreweries.co.ke</p>
-            <p class="text-xs text-gray-400">Manufacturing · High value</p>
-          </div>
-          <div class="text-right">
-            <span class="badge-amber">12 days</span>
-          </div>
-        </div>
-        <div class="flex items-center justify-between py-2.5">
-          <div>
-            <p class="text-sm text-gray-500">+ 40 more domains expiring</p>
-          </div>
-          <button class="text-xs font-semibold text-red-600 hover:text-red-800 underline">View all →</button>
+        <div class="flex gap-6 flex-shrink-0">
+          <div><p class="text-xs text-gray-400">Renewal Rate</p><p class="font-display text-lg font-bold text-gray-900 mt-0.5">87.4% <span class="badge-red ml-1" style="font-size:10px;">↓1.2%</span></p></div>
         </div>
       </div>
     </div>
-
   </div>
 
 </div>
+
+<script>
+  function showTab(panelId, el) {
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active-panel'); });
+    document.getElementById(panelId).classList.add('active-panel');
+    document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+    el.classList.add('active');
+  }
+</script>
+
 </body>
 </html>

@@ -1,7 +1,134 @@
-<div class="max-w-[1280px] mx-auto">
-  <div class="bg-white rounded-xl p-16 shadow-sm border border-outline-variant flex flex-col items-center justify-center text-center gap-4">
-    <span class="material-symbols-outlined text-outline-variant" style="font-size: 56px;">construction</span>
-    <h2 class="font-bold text-on-surface" style="font-size: 22px; text-transform: capitalize;">domains</h2>
-    <p class="text-on-surface-variant" style="font-size: 15px; max-width: 360px;">This section is under construction. Check back soon.</p>
+<div class="max-w-6xl mx-auto flex flex-col gap-6 p-6">
+
+  <!-- <%# Page Header %> -->
+  <div>
+    <h2 class="font-headline-lg text-headline-lg text-text-primary">Settings</h2>
+    <p class="font-body-md text-body-md text-outline mt-2">Manage your organization profile, security preferences, and system integrations.</p>
   </div>
+
+  <!-- <%# Tabs %> -->
+  <div class="border-b border-outline-variant">
+    <nav aria-label="Tabs" class="-mb-px flex space-x-8">
+      <a class="kenic-tab-active whitespace-nowrap py-4 px-1 font-label-md text-label-md flex items-center" href="#">
+        <span class="material-symbols-outlined mr-2 text-[18px]">domain</span>Profile
+      </a>
+      <a class="border-transparent text-on-surface-variant hover:text-primary hover:border-outline whitespace-nowrap py-4 px-1 border-b-2 font-label-md text-label-md flex items-center" href="#">
+        <span class="material-symbols-outlined mr-2 text-[18px]">security</span>Security
+      </a>
+      <a class="border-transparent text-on-surface-variant hover:text-primary hover:border-outline whitespace-nowrap py-4 px-1 border-b-2 font-label-md text-label-md flex items-center" href="#">
+        <span class="material-symbols-outlined mr-2 text-[18px]">notifications_active</span>Notifications
+      </a>
+    </nav>
+  </div>
+
+  <!-- <%# Settings Content: Profile %> -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    <!-- <%# Left Column: Form %> -->
+    <div class="lg:col-span-2 space-y-8">
+
+      <!-- <%# Organization Details Card %> -->
+      <section class="bg-surface-white rounded-[16px] card-shadow p-8">
+        <h3 class="font-headline-md text-headline-md text-text-primary mb-6">Organization Details</h3>
+        <div class="space-y-6">
+
+          <!-- <%# Logo Upload %> -->
+          <div class="flex items-center space-x-6">
+            <div class="w-24 h-24 rounded-lg bg-surface-container flex items-center justify-center border border-outline-variant border-dashed">
+              <span class="material-symbols-outlined text-outline text-3xl">add_photo_alternate</span>
+            </div>
+            <div>
+              <button class="bg-primary text-on-primary font-label-md text-label-md py-2 px-4 rounded-lg hover:bg-gray-800 transition-colors">Upload Logo</button>
+              <p class="font-label-sm text-label-sm text-outline mt-2">PNG, JPG up to 5MB. 256x256px recommended.</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block font-label-md text-label-md text-text-primary mb-2">Organization Name</label>
+              <input
+                class="w-full bg-surface-white border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                type="text"
+                value="<%= user.org %>"
+              />
+            </div>
+            <div>
+              <label class="block font-label-md text-label-md text-text-primary mb-2">Organization Type</label>
+              <input
+                class="w-full bg-surface-container-low border border-transparent rounded-lg px-4 py-2.5 font-body-md text-body-md text-outline cursor-not-allowed capitalize"
+                type="text"
+                value="<%= user.orgType %>"
+                disabled
+              />
+            </div>
+            <div>
+              <label class="block font-label-md text-label-md text-text-primary mb-2">Industry</label>
+              <input
+                class="w-full bg-surface-white border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                type="text"
+                value="<%= user.industry %>"
+              />
+            </div>
+            <div>
+              <label class="block font-label-md text-label-md text-text-primary mb-2">Primary Contact</label>
+              <input
+                class="w-full bg-surface-white border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                type="text"
+                value="<%= user.name %>"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- <%# Contact Information Card %> -->
+      <section class="bg-surface-white rounded-[16px] card-shadow p-8">
+        <h3 class="font-headline-md text-headline-md text-text-primary mb-6">Contact Information</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block font-label-md text-label-md text-text-primary mb-2">Email Address</label>
+            <input
+              class="w-full bg-surface-white border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+              type="email"
+              value="<%= user.email %>"
+            />
+          </div>
+          <div>
+            <label class="block font-label-md text-label-md text-text-primary mb-2">Phone Number</label>
+            <input
+              class="w-full bg-surface-white border border-outline-variant rounded-lg px-4 py-2.5 font-body-md text-body-md focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+              type="tel"
+              value="+254 <%= user.phone %>"
+            />
+          </div>
+        </div>
+        <div class="mt-8 flex justify-end">
+          <button class="bg-primary text-on-primary font-label-md text-label-md py-2.5 px-6 rounded-lg hover:bg-gray-800 transition-colors">Save Changes</button>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- <%# Right Column: Account Meta %> -->
+    <div class="space-y-8">
+      <section class="bg-surface-white rounded-[16px] card-shadow p-6">
+        <h4 class="font-label-md text-label-md text-outline uppercase tracking-wider mb-4">Account Status</h4>
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-body-md text-body-md text-text-primary">Partner Type</span>
+          <span class="bg-primary/10 text-primary px-3 py-1 rounded-full font-label-sm text-label-sm capitalize"><%= user.orgType %></span>
+        </div>
+        <div class="flex items-center justify-between mb-4">
+          <span class="font-body-md text-body-md text-text-primary">Industry</span>
+          <span class="font-body-md text-body-md text-text-primary"><%= user.industry %></span>
+        </div>
+        <hr class="border-outline-variant my-4"/>
+        <div class="flex items-start space-x-3 text-outline">
+          <span class="material-symbols-outlined text-[20px]">info</span>
+          <p class="font-label-sm text-label-sm leading-relaxed">To update your account type or registration details, please contact partner support directly.</p>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
 </div>

@@ -102,6 +102,14 @@ router.get('/settings', (req, res) => {
   renderPage(req, res, 'settings', {
     pageTitle:  'Settings',
     activePage: '/settings',
+    user: {
+      name:     req.session.userName     || '',
+      email:    req.session.user         || '',
+      org:      req.session.userOrg      || '',
+      orgType:  req.session.userOrgType  || '',
+      industry: req.session.userIndustry || '',
+      phone:    req.session.userPhone    || '',
+    },
   });
 });
 
